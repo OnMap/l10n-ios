@@ -18,7 +18,7 @@ class LanguageSelectVC: UIViewController {
             Localization.currentLanguage = selectedLanguage
             _ = navigationController?.popViewController(animated: true)
             if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                appDelegate.launchStoryboard(storyboard: .main)
+                appDelegate.launchStoryboard(.main)
             } else {
                 assertionFailure()
             }

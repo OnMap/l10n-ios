@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import RxSwift
 
-class MainVC: LocalizedViewController {
+class MainVC: UIViewController, LiveUpdatable {
+
+    // MARK: - LiveUpdatable Properties
+
+    var disposeBag = DisposeBag()
+    var localizationDictionary: [String : Localizable] = [:]
 
     // MARK: - Constants
 
     // Use enum in case of creating views from code
     enum LocalizationKeys {
         private static let title = "Main"
-        static let codeLabel = "\(LocalizationKeys.title).codeLabel"
+        static let codeLabel = "\(LocalizationKeys.title).СodeLabel"
     }
 
     // MARK: - Properties
@@ -39,6 +45,10 @@ class MainVC: LocalizedViewController {
             codeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             storyboardLabel.topAnchor.constraint(equalTo: codeLabel.bottomAnchor, constant: 30)
         ])
+
+        // LiveUpdatable configuration
+        localizationDictionary = localizationDictionary(from: view)
+        configureLiveUpdating()
     }
 }
 

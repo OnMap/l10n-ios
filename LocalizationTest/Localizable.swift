@@ -10,34 +10,12 @@ import Foundation
 import RealmSwift
 
 func localized(_ key: String) -> String {
-    #if REMOTE_LOCALIZATION
-        return localizedRemote(key)
-    #endif
-    return localizedLocal(key)
-}
-
-func localizedLocal(_ key: String) -> String {
     let localizedString = Bundle.main.localizedString(forKey: key, value: key, table: nil)
-    guard localizedString != key && !key.isEmpty else {
+    guard localizedString != key && !localizedString.isEmpty else {
         print("We should register this key: \(key)")
         return key
     }
     return Bundle.main.localizedString(forKey: key, value: key, table: nil)
-}
-
-func localizedRemote(_ key: String) -> String {
-        do {
-            let realm = try Realm(configuration: RealmConfig.localization.configuration)
-            if let localizedText = realm.object(ofType: LocalizedText.self, forPrimaryKey: key) {
-                return localizedText.text
-            } else {
-                print("There is no translation with key \(key) in realm")
-                return key
-            }
-        } catch {
-            print(error.localizedDescription)
-            return key
-        }
 }
 
 func localized(_ key: String, args: [CVarArg]) -> String {

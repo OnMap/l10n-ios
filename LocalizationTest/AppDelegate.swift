@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,14 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        let realm = try? Realm(configuration: RealmConfig.localization.configuration)
-        let localizedText = LocalizedText(key: "Main.Label", text: "Initial text in realm")
-        try? realm?.write { realm?.add(localizedText, update: true) }
+        Localization.setupCurrentLanguage()
+        LiveUpdatingService.setup()
         return true
     }
 
-    func launchStoryboard(storyboard: Storyboard) {
+    func launchStoryboard(_ storyboard: Storyboard) {
         let storyboard = UIStoryboard(name: storyboard.name, bundle: nil)
         let viewController = storyboard.instantiateInitialViewController()
         window?.rootViewController = viewController

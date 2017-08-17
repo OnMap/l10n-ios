@@ -8,31 +8,23 @@
 
 import UIKit
 
-protocol Localizable: class {
-    var localizedKey: String? { get set }
-}
+protocol Localizable: class { }
 
 protocol TextLocalizable: Localizable {
     var localizedTextKey: String? { get set }
 }
 
-extension TextLocalizable {
-    var localizedKey: String? {
-        get { return localizedTextKey }
-        set { localizedTextKey = newValue }
-    }
-}
+private var localizationTextKey: UInt8 = 0
 
 extension UILabel: TextLocalizable {
 
-    @IBInspectable public var localizedTextKey: String? {
+    @IBInspectable
+    public var localizedTextKey: String? {
         get {
-            return text
+            return objc_getAssociatedObject(self, &localizationTextKey) as? String
         }
-
         set {
-            guard let newValue = newValue else { return }
-            text = localized(newValue)
+            objc_setAssociatedObject(self, &localizationTextKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
         }
     }
 }
