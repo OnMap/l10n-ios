@@ -11,7 +11,10 @@ import RealmSwift
 
 enum RealmConfig {
 
-    case localization
+    case currentLocalization
+    case englishLocalization
+    case hebrewLocalization
+    case russianLocalization
 
     // MARK: - Private configurations
     private static let englishLocalizationConfig = Realm.Configuration(
@@ -28,10 +31,16 @@ enum RealmConfig {
 
     // MARK: - Current configuration
     var configuration: Realm.Configuration {
-        switch Localization.currentLanguage {
-            case .english: return RealmConfig.englishLocalizationConfig
-            case .hebrew: return RealmConfig.hebrewLocalizationConfig
-            case .russian: return RealmConfig.russianLocalizationConfig
+        switch self {
+        case .currentLocalization:
+            switch Localization.currentLanguage {
+                case .english: return RealmConfig.englishLocalizationConfig
+                case .hebrew: return RealmConfig.hebrewLocalizationConfig
+                case .russian: return RealmConfig.russianLocalizationConfig
+            }
+        case .englishLocalization: return RealmConfig.englishLocalizationConfig
+        case .hebrewLocalization: return RealmConfig.hebrewLocalizationConfig
+        case .russianLocalization: return RealmConfig.russianLocalizationConfig
         }
     }
 }

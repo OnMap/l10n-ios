@@ -1,0 +1,20 @@
+{
+    "en": {
+        "Main.Label": "Header",
+        "Main.CodeLabel": "Home",
+        "test": "Test",
+        "title": "Title"
+    },
+    "he": {
+        "Main.Label": "hhhhe",
+        "Main.CodeLabel": "eeeeee",
+        "test": "rereererer",
+        "title": "hehed"
+    },
+    "ru": {
+        "Main.Label": "Хедер",
+        "Main.CodeLabel": "Дом",
+        "test": "Тест",
+        "title": "Заголовок"
+    }
+}

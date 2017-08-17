@@ -51,7 +51,7 @@ class Localization: NSObject {
             return Language(rawValue: currentLanguage) ?? Keys.defaultLanguage
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: Keys.userLanguageSavedKey)
+            UserDefaults.standard.setValue(newValue.rawValue, forKey: Keys.userLanguageSavedKey)
             UserDefaults.standard.synchronize()
             Bundle.update(language: newValue)
         }
@@ -103,7 +103,7 @@ extension Bundle {
         UserDefaults.standard.set(Localization.isRTL, forKey: "NSForceRightToLeftWritingDirection")
         UserDefaults.standard.synchronize()
 
-        let bundlePath = Bundle.init(path: Bundle.main.path(forResource: language.rawValue, ofType: "lproj")!)
+        let bundlePath = Bundle(path: Bundle.main.path(forResource: language.rawValue, ofType: "lproj")!)
 
         objc_setAssociatedObject(Bundle.main, &bundleKey, bundlePath,
                                  objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
