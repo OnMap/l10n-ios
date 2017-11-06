@@ -11,8 +11,8 @@ import RealmSwift
 
 class LocalizedText: Object {
 
-    dynamic var key = ""
-    dynamic var text = ""
+    @objc dynamic var key = ""
+    @objc dynamic var text = ""
 
     convenience init(key: String, text: String) {
         self.init()

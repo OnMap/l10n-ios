@@ -54,15 +54,15 @@ class LiveUpdatingService {
 
     private static func parseJSON(_ json: JSON) {
         if let english = json["en"] as? JSON,
-            let englishRealm = try? Realm(configuration: RealmConfig.englishLocalization.configuration) {
+            let englishRealm = try? Realm(realmConfig: .english) {
             LiveUpdatingService.addLocalizedTexts(json: english, into: englishRealm)
         }
         if let hebrew = json["he"] as? JSON,
-            let hebrewRealm = try? Realm(configuration: RealmConfig.hebrewLocalization.configuration) {
+            let hebrewRealm = try? Realm(realmConfig: .hebrew) {
             LiveUpdatingService.addLocalizedTexts(json: hebrew, into: hebrewRealm)
         }
         if let russian = json["ru"] as? JSON,
-            let russianRealm = try? Realm(configuration: RealmConfig.russianLocalization.configuration) {
+            let russianRealm = try? Realm(realmConfig: .russian) {
             LiveUpdatingService.addLocalizedTexts(json: russian, into: russianRealm)
         }
     }

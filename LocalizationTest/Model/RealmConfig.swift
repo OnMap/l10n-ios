@@ -11,37 +11,43 @@ import RealmSwift
 
 enum RealmConfig {
 
-    case currentLocalization
-    case englishLocalization
-    case hebrewLocalization
-    case russianLocalization
+    case current
+    case english
+    case hebrew
+    case russian
 
     // MARK: - Private configurations
-    private static let englishLocalizationConfig = Realm.Configuration(
+    private static let englishConfig = Realm.Configuration(
         fileURL: URL.inDocumentsFolder(fileName: "englishLocalization.realm")
     )
 
-    private static let hebrewLocalizationConfig = Realm.Configuration(
+    private static let hebrewConfig = Realm.Configuration(
         fileURL: URL.inDocumentsFolder(fileName: "hebrewLocalization.realm")
     )
 
-    private static let russianLocalizationConfig = Realm.Configuration(
+    private static let russianConfig = Realm.Configuration(
         fileURL: URL.inDocumentsFolder(fileName: "russianLocalization.realm")
     )
 
     // MARK: - Current configuration
     var configuration: Realm.Configuration {
         switch self {
-        case .currentLocalization:
+        case .current:
             switch Localization.currentLanguage {
-                case .english: return RealmConfig.englishLocalizationConfig
-                case .hebrew: return RealmConfig.hebrewLocalizationConfig
-                case .russian: return RealmConfig.russianLocalizationConfig
+                case .english: return RealmConfig.englishConfig
+                case .hebrew: return RealmConfig.hebrewConfig
+                case .russian: return RealmConfig.russianConfig
             }
-        case .englishLocalization: return RealmConfig.englishLocalizationConfig
-        case .hebrewLocalization: return RealmConfig.hebrewLocalizationConfig
-        case .russianLocalization: return RealmConfig.russianLocalizationConfig
+        case .english: return RealmConfig.englishConfig
+        case .hebrew: return RealmConfig.hebrewConfig
+        case .russian: return RealmConfig.russianConfig
         }
+    }
+}
+
+extension Realm {
+    convenience init(realmConfig: RealmConfig) throws {
+        try self.init(configuration: realmConfig.configuration)
     }
 }
 

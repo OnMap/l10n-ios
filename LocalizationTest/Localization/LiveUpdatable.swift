@@ -47,7 +47,7 @@ extension LiveUpdatable {
 
     func configureLiveUpdating() {
         do {
-            let realm = try Realm(configuration: RealmConfig.currentLocalization.configuration)
+            let realm = try Realm(realmConfig: .current)
             let localizedTexts = realm.objects(LocalizedText.self)
             Observable.arrayWithChangeset(from: localizedTexts)
                 .subscribe(onNext: { array, changes in

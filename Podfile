@@ -6,8 +6,8 @@ target 'LocalizationTest' do
   use_frameworks!
 
   # Pods for LocalizationTest
-  pod 'RealmSwift', '~> 2.9.1'
-  pod 'RxRealm', '~> 0.6.0'
-  pod 'Socket.IO-Client-Swift'
+  pod 'RealmSwift', '~> 3.0.1'
+  pod 'RxRealm', '~> 0.7.4'
+  pod 'Socket.IO-Client-Swift', '~> 12.1.2'
 
 end
