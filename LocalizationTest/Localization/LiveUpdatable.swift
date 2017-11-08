@@ -10,26 +10,28 @@ import UIKit
 import RxSwift
 import RealmSwift
 import RxRealm
+import NSObject_Rx
 
 /*
  There are two ways to receive live updates in UIViewController:
 
- 1. Implement protocol LiveUpdatable and write next two lines in viewDidLoad():
+ 1. Implement protocol LiveUpdatable and write next line in viewDidLoad():
 
-    localizationDictionary = localizationDictionary(from: view)
-    configureLiveUpdating()
+    createLocalizationDictionary(from: view)
 
- 2. Inherit from LiveUpdatableViewController
+ 2. Inherit from LiveUpdatableViewController, where it's done for you
  */
 
-protocol LiveUpdatable {
-    var disposeBag: DisposeBag { get }
+protocol LiveUpdatable: class {
     var localizationDictionary: [String: Localizable] { get set }
+    func createLocalizationDictionary(from view: UIView) -> [String: Localizable]
+    func configureLiveUpdating()
 }
 
-extension LiveUpdatable {
+extension LiveUpdatable where Self: NSObject {
 
-    func localizationDictionary(from view: UIView) -> [String: Localizable] {
+    @discardableResult
+    func createLocalizationDictionary(from view: UIView) -> [String: Localizable] {
         if view.subviews.isEmpty {
             if let textLocalizable = view as? TextLocalizable,
                 let key = textLocalizable.localizedTextKey {
@@ -38,10 +40,12 @@ extension LiveUpdatable {
         }
         var localizationDict: [String: Localizable] = [:]
         view.subviews.forEach { subview in
-            for (key, value) in localizationDictionary(from: subview) {
+            for (key, value) in createLocalizationDictionary(from: subview) {
                 localizationDict[key] = value
             }
         }
+        self.localizationDictionary = localizationDict
+        configureLiveUpdating()
         return localizationDict
     }
 
@@ -53,7 +57,7 @@ extension LiveUpdatable {
                 .subscribe(onNext: { array, changes in
                     self.updateViews(from: array, with: changes)
                 })
-                .disposed(by: disposeBag)
+                .disposed(by: rx.disposeBag)
         } catch {
             print(error.localizedDescription)
         }
@@ -90,16 +94,12 @@ extension LiveUpdatable {
 
 class LiveUpdatableViewController: UIViewController, LiveUpdatable {
 
-    // MARK: - Properties
-
-    var disposeBag = DisposeBag()
     var localizationDictionary: [String: Localizable] = [:]
 
     // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        localizationDictionary = localizationDictionary(from: view)
-        configureLiveUpdating()
+        createLocalizationDictionary(from: view)
     }
 }

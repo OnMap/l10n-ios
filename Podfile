@@ -9,5 +9,6 @@ target 'LocalizationTest' do
   pod 'RealmSwift', '~> 3.0.1'
   pod 'RxRealm', '~> 0.7.4'
   pod 'Socket.IO-Client-Swift', '~> 12.1.2'
+  pod 'NSObject+Rx', '~> 4.2.0'
 
 end

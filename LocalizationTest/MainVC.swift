@@ -13,8 +13,7 @@ class MainVC: UIViewController, LiveUpdatable {
 
     // MARK: - LiveUpdatable Properties
 
-    var disposeBag = DisposeBag()
-    var localizationDictionary: [String : Localizable] = [:]
+    var localizationDictionary: [String: Localizable] = [:]
 
     // MARK: - Constants
 
@@ -47,8 +46,7 @@ class MainVC: UIViewController, LiveUpdatable {
         ])
 
         // LiveUpdatable configuration
-        localizationDictionary = localizationDictionary(from: view)
-        configureLiveUpdating()
+        createLocalizationDictionary(from: view)
     }
 }
 
