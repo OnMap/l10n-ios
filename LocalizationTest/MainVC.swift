@@ -8,20 +8,13 @@
 
 import UIKit
 import RxSwift
+//import OMLocalization
 
 class MainVC: UIViewController, LiveUpdatable {
 
-    // MARK: - LiveUpdatable Properties
+    // MARK: - LiveUpdatable Dictionary
 
-    var localizationDictionary: [String: Localizable] = [:]
-
-    // MARK: - Constants
-
-    // Use enum in case of creating views from code
-    enum LocalizationKeys {
-        private static let title = "Main"
-        static let codeLabel = "\(LocalizationKeys.title).СodeLabel"
-    }
+    var localizedViews: [String: Localizable] = [:]
 
     // MARK: - Properties
 
@@ -29,7 +22,7 @@ class MainVC: UIViewController, LiveUpdatable {
 
     private lazy var codeLabel: UILabel = {
         let label = UILabel()
-        label.text = localized(LocalizationKeys.codeLabel)
+        label.text = "Main.CodeLabel"
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -46,7 +39,7 @@ class MainVC: UIViewController, LiveUpdatable {
         ])
 
         // LiveUpdatable configuration
-        createLocalizationDictionary(from: view)
+        createLocalizedViews(from: view, language: .english)
     }
 }
 

@@ -12,36 +12,36 @@ import SocketIO
 
 typealias JSON = [String: Any]
 
-class LiveUpdatingService {
+public class LiveUpdatingService {
 
     enum Constants {
-        static let appId = "20ed5867-d32c-4d34-b8b7-4dcb8d48f79b"
-        static let url = URL(string: "http://localhost:3030/v1/translations?app_id=\(Constants.appId)")!
+        static let urlString = "https://parseltongue.onmap.co.il/v1/translations"
     }
 
-    static func setup() {
-        LiveUpdatingService.fetchAndParseAllLocalizedTexts()
-        LiveUpdatingService.configureLiveUpdating()
+    public static func setup(appId: String) {
+        let url = URL(string: Constants.urlString + "?app_id=" + appId)!
+        LiveUpdatingService.fetchAndParseAllLocalizedTexts(url: url)
+        LiveUpdatingService.configureLiveUpdating(url: url, appId: appId)
     }
 
-    private static func fetchAndParseAllLocalizedTexts() {
-        let urlRequest = URLRequest(url: Constants.url)
+    private static func fetchAndParseAllLocalizedTexts(url: URL) {
+        let urlRequest = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             guard let data = data else { return }
             let json = try! JSONSerialization.jsonObject(with: data, options: []) as! JSON
-            LiveUpdatingService.parseJSON(json)
+            parseJSON(json)
         }
         task.resume()
     }
 
-    private static func configureLiveUpdating() {
-        let socket = SocketIOClient(socketURL: Constants.url, config: [.log(true), .compress])
+    private static func configureLiveUpdating(url: URL, appId: String) {
+        let socket = SocketIOClient(socketURL: url, config: [.log(true), .compress])
         socket.on(clientEvent: .connect) { data, ack in
             print("socket connected")
         }
-        socket.on(Constants.appId) { data, ack in
+        socket.on(appId) { data, ack in
             guard let json = data[0] as? JSON else { return }
-            LiveUpdatingService.parseJSON(json)
+            parseJSON(json)
             if let cur = data[0] as? Double {
                 socket.emitWithAck("canUpdate", cur).timingOut(after: 0) { data in
                     socket.emit("update", ["amount": cur + 2.50])
@@ -55,15 +55,15 @@ class LiveUpdatingService {
     private static func parseJSON(_ json: JSON) {
         if let english = json["en"] as? JSON,
             let englishRealm = try? Realm(realmConfig: .english) {
-            LiveUpdatingService.addLocalizedTexts(json: english, into: englishRealm)
+            addLocalizedTexts(json: english, into: englishRealm)
         }
         if let hebrew = json["he"] as? JSON,
             let hebrewRealm = try? Realm(realmConfig: .hebrew) {
-            LiveUpdatingService.addLocalizedTexts(json: hebrew, into: hebrewRealm)
+            addLocalizedTexts(json: hebrew, into: hebrewRealm)
         }
         if let russian = json["ru"] as? JSON,
             let russianRealm = try? Realm(realmConfig: .russian) {
-            LiveUpdatingService.addLocalizedTexts(json: russian, into: russianRealm)
+            addLocalizedTexts(json: russian, into: russianRealm)
         }
     }
 

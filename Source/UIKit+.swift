@@ -8,9 +8,9 @@
 
 import UIKit
 
-protocol Localizable: class { }
+public typealias Localizable = TextLocalizable
 
-protocol TextLocalizable: Localizable {
+public protocol TextLocalizable: class {
     var localizedTextKey: String? { get set }
 }
 
