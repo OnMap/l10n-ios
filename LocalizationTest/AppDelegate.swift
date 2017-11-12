@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import OMLocalization
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         Localization.setupCurrentLanguage()
-        LiveUpdatingService.setup(appId: "bla")
+        LiveUpdatingService.setup(appId: "f635ba15-0adf-42bc-b13e-88499a433f37")
         return true
     }
 

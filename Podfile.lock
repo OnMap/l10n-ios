@@ -1,34 +1,42 @@
 PODS:
   - NSObject+Rx (4.2.0):
     - RxSwift (~> 4.0)
-  - Realm (3.0.1):
-    - Realm/Headers (= 3.0.1)
-  - Realm/Headers (3.0.1)
-  - RealmSwift (3.0.1):
-    - Realm (= 3.0.1)
+  - OMLocalization (0.0.4):
+    - NSObject+Rx (~> 4.2.0)
+    - RealmSwift (~> 3.0.0)
+    - RxRealm (~> 0.7.4)
+    - RxSwift (~> 4.0.0)
+    - Socket.IO-Client-Swift (~> 12.1.3)
+  - Realm (3.0.2):
+    - Realm/Headers (= 3.0.2)
+  - Realm/Headers (3.0.2)
+  - RealmSwift (3.0.2):
+    - Realm (= 3.0.2)
   - RxRealm (0.7.4):
     - RealmSwift (~> 3.0)
     - RxSwift (~> 4.0)
   - RxSwift (4.0.0)
-  - Socket.IO-Client-Swift (12.1.2):
+  - Socket.IO-Client-Swift (12.1.3):
     - Starscream (~> 2.1.1)
   - Starscream (2.1.1)
 
 DEPENDENCIES:
-  - NSObject+Rx (~> 4.2.0)
-  - RealmSwift (~> 3.0.1)
-  - RxRealm (~> 0.7.4)
-  - Socket.IO-Client-Swift (~> 12.1.2)
+  - OMLocalization (from `.`)
+
+EXTERNAL SOURCES:
+  OMLocalization:
+    :path: .
 
 SPEC CHECKSUMS:
   NSObject+Rx: cbbc05e3cb3ad446cdbced3e00e39c9efaf02925
-  Realm: ba6144c74f835f7497791f6599d63a7755377b83
-  RealmSwift: 7d13b1ac4b6022a13f841e3143e7789c9e40ad0d
+  OMLocalization: f29a02c87b431155dafcde328d40680344ec79d9
+  Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
+  RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
   RxRealm: 9e203070a6adadd8f2592b58bbc9c8cc40aa35ec
   RxSwift: fd680d75283beb5e2559486f3c0ff852f0d35334
-  Socket.IO-Client-Swift: ba3cb1c4bf0a6ca90080406a2c22685c25ad1f60
+  Socket.IO-Client-Swift: 2d3838d0e7bc105626872081fb6a23141145e8f8
   Starscream: 142bd8ef24592d985daee9fa48c936070b85b15f
 
-PODFILE CHECKSUM: b120c5ea0d64fd24bb16e635358c22e7b4fac20d
+PODFILE CHECKSUM: 5963f61c9e4b638cf4510e605627fe3facf92278
 
 COCOAPODS: 1.3.1

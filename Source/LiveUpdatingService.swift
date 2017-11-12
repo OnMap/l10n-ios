@@ -20,8 +20,8 @@ public class LiveUpdatingService {
 
     public static func setup(appId: String) {
         let url = URL(string: Constants.urlString + "?app_id=" + appId)!
-        LiveUpdatingService.fetchAndParseAllLocalizedTexts(url: url)
-        LiveUpdatingService.configureLiveUpdating(url: url, appId: appId)
+        fetchAndParseAllLocalizedTexts(url: url)
+        configureLiveUpdating(url: url, appId: appId)
     }
 
     private static func fetchAndParseAllLocalizedTexts(url: URL) {
@@ -35,7 +35,7 @@ public class LiveUpdatingService {
     }
 
     private static func configureLiveUpdating(url: URL, appId: String) {
-        let socket = SocketIOClient(socketURL: url, config: [.log(true), .compress])
+        let socket = SocketIOClient(socketURL: url, config: [.log(false), .compress])
         socket.on(clientEvent: .connect) { data, ack in
             print("socket connected")
         }
