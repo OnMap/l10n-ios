@@ -22,7 +22,7 @@ class MainVC: UIViewController, LiveUpdatable {
 
     private lazy var codeLabel: UILabel = {
         let label = UILabel()
-        label.localizedTextKey = "Main.CodeLabel.Text"
+        label.textKey = "Main.CodeLabel.Text"
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -45,7 +45,7 @@ class MainVC: UIViewController, LiveUpdatable {
         case .hebrew: language = .hebrew
         case .russian: language = .russian
         }
-        createLocalizedViews(from: view, language: language)
+        configureLocalizedViews(from: view, language: language)
     }
 }
 

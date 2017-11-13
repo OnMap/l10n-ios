@@ -1,7 +1,7 @@
 PODS:
   - NSObject+Rx (4.2.0):
     - RxSwift (~> 4.0)
-  - OMLocalization (0.1):
+  - OMLocalization (0.2):
     - NSObject+Rx (~> 4.2.0)
     - RealmSwift (~> 3.0.0)
     - RxRealm (~> 0.7.4)
@@ -29,7 +29,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   NSObject+Rx: cbbc05e3cb3ad446cdbced3e00e39c9efaf02925
-  OMLocalization: 0eb72455bcb5d9ff907ea73e3c4d8352eec18464
+  OMLocalization: 2164f2281b6205040622cdd8802cf305b3a115b9
   Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
   RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
   RxRealm: 9e203070a6adadd8f2592b58bbc9c8cc40aa35ec
@@ -37,6 +37,6 @@ SPEC CHECKSUMS:
   Socket.IO-Client-Swift: 2d3838d0e7bc105626872081fb6a23141145e8f8
   Starscream: 142bd8ef24592d985daee9fa48c936070b85b15f
 
-PODFILE CHECKSUM: 0107c1bfe90db907d719e0500ae15f0a5943859a
+PODFILE CHECKSUM: a18f17c8185d03dfc90e4f46547b82222e0646e6
 
 COCOAPODS: 1.3.1

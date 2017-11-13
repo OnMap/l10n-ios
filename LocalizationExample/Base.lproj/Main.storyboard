@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rIe-1X-M3D">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rIe-1X-M3D">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -15,46 +15,89 @@
         </array>
     </customFonts>
     <scenes>
-        <!--MainVC-->
+        <!--Title-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MainVC" customModule="LocalizationTest" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
+                <viewController id="BYZ-38-t0r" customClass="MainVC" customModule="LocalizationExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This text should be localized (and later even live)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ytV-ai-hhH">
-                                <rect key="frame" x="24" y="247.5" width="327" height="21"/>
+                                <rect key="frame" x="8" y="247.5" width="359.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedTextKey" value="Main.Test"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="textKey" value="Main.StoryboardLabel.Text"/>
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qv8-S4-lS7">
                                 <rect key="frame" x="127" y="318.5" width="120" height="30"/>
                                 <state key="normal" title="Change language"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="normalTitleKey" value="Main.ChangeLanguageButton.Title.Normal"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="highlightedTitleKey" value="Main.ChangeLanguageButton.Title.Highlighted"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="Dzd-M9-cJl" kind="presentation" id="ArT-Lr-ARL"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9IY-VF-yoK">
+                                <rect key="frame" x="127" y="389" width="121" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                            </segmentedControl>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0nF-kM-Y9k">
+                                <rect key="frame" x="139" y="445" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="textKey" value="Main.TextField.Text"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholderKey" value="Main.TextField.Placeholder"/>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="usY-ag-36g">
+                                <rect key="frame" x="67" y="72" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="textKey" value="Main.TextView.Text"/>
+                                </userDefinedRuntimeAttributes>
+                            </textView>
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hb9-A5-bGk">
+                                <rect key="frame" x="0.0" y="519" width="375" height="56"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="textKey" value="Main.SearchBar.Text"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="promptKey" value="Main.SearchBar.Prompt"/>
+                                </userDefinedRuntimeAttributes>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ytV-ai-hhH" secondAttribute="trailing" constant="8" id="7Xe-ow-FGi"/>
-                            <constraint firstItem="ytV-ai-hhH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="8" id="QBb-ql-YaB"/>
+                            <constraint firstItem="ksS-gF-3vh" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ytV-ai-hhH" secondAttribute="trailing" constant="8" id="7Xe-ow-FGi"/>
+                            <constraint firstItem="ytV-ai-hhH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ksS-gF-3vh" secondAttribute="leading" constant="8" id="QBb-ql-YaB"/>
                             <constraint firstItem="Qv8-S4-lS7" firstAttribute="top" secondItem="ytV-ai-hhH" secondAttribute="bottom" constant="50" id="Xa3-ty-J47"/>
                             <constraint firstItem="Qv8-S4-lS7" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="bcO-xH-vqe"/>
-                            <constraint firstItem="Qv8-S4-lS7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cw4-bl-lyP"/>
-                            <constraint firstItem="ytV-ai-hhH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="te8-2f-9ld"/>
+                            <constraint firstItem="Qv8-S4-lS7" firstAttribute="centerX" secondItem="ksS-gF-3vh" secondAttribute="centerX" id="cw4-bl-lyP"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="ksS-gF-3vh"/>
                     </view>
-                    <navigationItem key="navigationItem" id="mVw-1a-ZDe"/>
+                    <navigationItem key="navigationItem" title="Title" id="KiR-vN-lSs">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="titleKey" value="Main.TitleNavigationItem.Title"/>
+                        </userDefinedRuntimeAttributes>
+                    </navigationItem>
                     <connections>
                         <outlet property="storyboardLabel" destination="ytV-ai-hhH" id="fTS-Ls-y3k"/>
                     </connections>
@@ -66,11 +109,7 @@
         <!--Language-->
         <scene sceneID="dOo-zD-OkN">
             <objects>
-                <viewController id="2tV-7B-9TB" customClass="LanguageSelectVC" customModule="LocalizationTest" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="DJu-ep-P6F"/>
-                        <viewControllerLayoutGuide type="bottom" id="REb-Rz-Xwu"/>
-                    </layoutGuides>
+                <viewController id="2tV-7B-9TB" customClass="LanguageSelectVC" customModule="LocalizationExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ugc-SX-DBJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -107,6 +146,7 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.93732154369999998" green="0.96464002130000004" blue="0.96862554550000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <viewLayoutGuide key="safeArea" id="862-IO-fcl"/>
                     </view>
                     <navigationItem key="navigationItem" title="Language" id="iSm-vy-9XI">
                         <barButtonItem key="leftBarButtonItem" title="Save" id="nIY-4J-6gf">

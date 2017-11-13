@@ -1,6 +1,6 @@
 //
 //  LiveUpdatingService.swift
-//  LocalizationTest
+//  OMLocalization
 //
 //  Created by Alex Alexandrovych on 17/08/2017.
 //  Copyright © 2017 Alex Alexandrovych. All rights reserved.
@@ -14,15 +14,19 @@ typealias JSON = [String: Any]
 
 public class LiveUpdatingService {
 
-    enum Constants {
+    private enum Constants {
         static let urlString = "https://parseltongue.onmap.co.il/v1/translations"
     }
+
+    // MARK: - Public
 
     public static func setup(appId: String) {
         let url = URL(string: Constants.urlString + "?app_id=" + appId)!
         fetchAndParseAllLocalizedTexts(url: url)
         configureLiveUpdating(url: url, appId: appId)
     }
+
+    // MARK: - Private
 
     private static func fetchAndParseAllLocalizedTexts(url: URL) {
         let urlRequest = URLRequest(url: url)
@@ -68,12 +72,13 @@ public class LiveUpdatingService {
     }
 
     private static func addLocalizedTexts(json: JSON, into realm: Realm) {
-        let localizedTexts = json.flatMap { key, value -> LocalizedText? in
+        let localizedElements = json.flatMap { key, value -> LocalizedElement? in
             guard let text = value as? String else { return nil }
-            return LocalizedText(key: key, text: text)
+            let components = key.components(separatedBy: ".")
+            return LocalizedElement(key: key, text: text, type: components.last ?? nil)
         }
         do {
-            try realm.write { realm.add(localizedTexts, update: true) }
+            try realm.write { realm.add(localizedElements, update: true) }
         } catch {
             print(error.localizedDescription)
         }

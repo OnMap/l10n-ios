@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "OMLocalization"
-  s.version      = "0.1"
+  s.version      = "0.2"
   s.summary      = "A tool for live remote localization."
   s.description  = <<-DESC
     This is an addition to the development process
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "9.0"
 
   s.source       = { :git => "https://github.com/OnMap/Localization.git", :tag => "#{s.version}" }
-  s.source_files  = "Source/*.swift"
+  s.source_files  = "Source/**/*.swift"
 
   s.framework      = 'Foundation'
 

@@ -4,6 +4,6 @@ use_frameworks!
 
 target 'LocalizationExample' do
 
-pod 'OMLocalization', :path => '.'
+  pod 'OMLocalization', :path => '.'
 
 end

@@ -1,6 +1,6 @@
 //
 //  RealmConfig.swift
-//  OnMap
+//  OMLocalization
 //
 //  Created by Alex Alexandrovych on 20/07/2017.
 //  Copyright © 2017 OnMap LTD. All rights reserved.
@@ -9,11 +9,9 @@
 import Foundation
 import RealmSwift
 
-enum RealmConfig {
+public enum RealmConfig {
 
-    case english
-    case hebrew
-    case russian
+    case english, hebrew, russian
 
     // MARK: - Private configurations
     private static let englishConfig = Realm.Configuration(
