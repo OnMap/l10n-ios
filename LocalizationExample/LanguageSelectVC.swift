@@ -1,6 +1,6 @@
 //
 //  LanguageSelectVC.swift
-//  OnMap
+//  LocalizationExample
 //
 //  Created by Philip Kramer on 24/12/2016.
 //  Copyright © 2016 OnMap LTD. All rights reserved.

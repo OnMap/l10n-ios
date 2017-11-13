@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  LocalizationTest
+//  LocalizationExample
 //
 //  Created by Alex Alexandrovych on 16/08/2017.
 //  Copyright © 2017 Alex Alexandrovych. All rights reserved.
