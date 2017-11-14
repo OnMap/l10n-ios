@@ -35,6 +35,23 @@ public enum RealmConfig {
         case .russian: return RealmConfig.russianConfig
         }
     }
+
+    func delete() {
+        guard let url = configuration.fileURL else { return }
+        let realmURLsToDelete = [
+            url,
+            url.appendingPathExtension("lock"),
+            url.appendingPathExtension("note"),
+            url.appendingPathExtension("management")
+        ]
+        realmURLsToDelete.forEach { url in
+            do {
+                try FileManager.default.removeItem(at: url)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
 
 extension Realm {

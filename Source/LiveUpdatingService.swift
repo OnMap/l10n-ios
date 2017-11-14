@@ -21,12 +21,17 @@ public class LiveUpdatingService {
     // MARK: - Public
 
     public static func setup(appId: String) {
+        deleteExistingRealms()
         let url = URL(string: Constants.urlString + "?app_id=" + appId)!
         fetchAndParseAllLocalizedTexts(url: url)
         configureLiveUpdating(url: url, appId: appId)
     }
 
     // MARK: - Private
+
+    private static func deleteExistingRealms() {
+        [RealmConfig.english, RealmConfig.hebrew, RealmConfig.russian].forEach { $0.delete() }
+    }
 
     private static func fetchAndParseAllLocalizedTexts(url: URL) {
         let urlRequest = URLRequest(url: url)
