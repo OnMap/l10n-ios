@@ -27,6 +27,7 @@ public enum RealmConfig {
     )
 
     // MARK: - Current configuration
+
     var configuration: Realm.Configuration {
         switch self {
         case .english: return RealmConfig.englishConfig
