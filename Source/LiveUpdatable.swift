@@ -15,7 +15,7 @@ import NSObject_Rx
 private let separator = "."
 
 enum TextFieldLocalizedProperty: String {
-    case `default`, text, placeholder
+    case text, placeholder
 }
 
 extension TextFieldLocalizedProperty: CustomStringConvertible {
@@ -25,7 +25,7 @@ extension TextFieldLocalizedProperty: CustomStringConvertible {
 }
 
 enum SearchBarLocalizedProperty: String {
-    case `default`, text, placeholder, prompt
+    case text, placeholder, prompt
 }
 
 extension SearchBarLocalizedProperty: CustomStringConvertible {
@@ -35,7 +35,7 @@ extension SearchBarLocalizedProperty: CustomStringConvertible {
 }
 
 enum ButtonLocalizedProperty: String {
-    case `default`, normal, highlighted, selected, disabled
+    case normal, highlighted, selected, disabled
 }
 
 extension ButtonLocalizedProperty: CustomStringConvertible {
@@ -121,17 +121,17 @@ extension LiveUpdatable where Self: UIViewController {
 
             switch view {
             case is UITextField:
-                let properties: [TextFieldLocalizedProperty] = [.default, .text, .placeholder]
+                let properties: [TextFieldLocalizedProperty] = [.text, .placeholder]
                 properties.forEach {
                     views[key + separator + $0.description] = view
                 }
             case is UIButton:
-                let properties: [ButtonLocalizedProperty] = [.default, .normal, .selected, .highlighted, .disabled]
+                let properties: [ButtonLocalizedProperty] = [.normal, .selected, .highlighted, .disabled]
                 properties.forEach {
                     views[key + separator + $0.description] = view
                 }
             case is UISearchBar:
-                let properties: [SearchBarLocalizedProperty] = [.default, .text, .placeholder, .prompt]
+                let properties: [SearchBarLocalizedProperty] = [.text, .placeholder, .prompt]
                 properties.forEach {
                     views[key + separator + $0.description] = view
                 }
