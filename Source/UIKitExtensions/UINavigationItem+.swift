@@ -7,18 +7,17 @@
 
 import UIKit
 
-private var runtimeTitleKey: UInt8 = 0
+private var runtimeLocalizationKey: UInt8 = 0
 
-extension UINavigationItem: TitleLocalizable {
+extension UINavigationItem {
 
     @IBInspectable
-    public var titleKey: String? {
+    public var localizationKey: String? {
         get {
-            return objc_getAssociatedObject(self, &runtimeTitleKey) as? String
+            return objc_getAssociatedObject(self, &runtimeLocalizationKey) as? String
         }
         set {
-            objc_setAssociatedObject(self, &runtimeTitleKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-            title = newValue
+            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
         }
     }
 }

@@ -46,11 +46,8 @@ public class LiveUpdatingService {
         socket.on(appId) { data, ack in
             guard let json = data[0] as? JSON else { return }
             parseJSON(json)
-            if let cur = data[0] as? Double {
-                socket.emitWithAck("canUpdate", cur).timingOut(after: 0) { data in
-                    socket.emit("update", ["amount": cur + 2.50])
-                }
-                ack.with("Got your currentAmount", "dude")
+            socket.emitWithAck("canUpdate", 0).timingOut(after: 0) { _ in
+                socket.emit("updated")
             }
         }
         socket.connect()
@@ -74,8 +71,7 @@ public class LiveUpdatingService {
     private static func addLocalizedTexts(json: JSON, into realm: Realm) {
         let localizedElements = json.flatMap { key, value -> LocalizedElement? in
             guard let text = value as? String else { return nil }
-            let components = key.components(separatedBy: ".")
-            return LocalizedElement(key: key, text: text, type: components.last ?? nil)
+            return LocalizedElement(key: key, text: text)
         }
         do {
             try realm.write { realm.add(localizedElements, update: true) }

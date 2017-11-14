@@ -12,7 +12,6 @@
 		AB54C0921F448B3500AEC098 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB54C0911F448B3500AEC098 /* AppDelegate.swift */; };
 		AB54C0941F448B3500AEC098 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB54C0931F448B3500AEC098 /* MainVC.swift */; };
 		AB54C0971F448B3500AEC098 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB54C0951F448B3500AEC098 /* Main.storyboard */; };
-		AB54C0991F448B3500AEC098 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB54C0981F448B3500AEC098 /* Assets.xcassets */; };
 		AB54C09C1F448B3500AEC098 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB54C09A1F448B3500AEC098 /* LaunchScreen.storyboard */; };
 		AB54C0A41F448E4F00AEC098 /* LanguageSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB54C0A31F448E4F00AEC098 /* LanguageSelectVC.swift */; };
 		AB54C0A61F448EDB00AEC098 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB54C0A51F448EDB00AEC098 /* Localization.swift */; };
@@ -28,7 +27,6 @@
 		AB54C08E1F448B3500AEC098 /* LocalizationExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocalizationExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB54C0911F448B3500AEC098 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB54C0931F448B3500AEC098 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
-		AB54C0981F448B3500AEC098 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB54C09B1F448B3500AEC098 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB54C09D1F448B3500AEC098 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB54C0A31F448E4F00AEC098 /* LanguageSelectVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSelectVC.swift; sourceTree = "<group>"; };
@@ -102,7 +100,6 @@
 				AB54C0931F448B3500AEC098 /* MainVC.swift */,
 				AB54C0A31F448E4F00AEC098 /* LanguageSelectVC.swift */,
 				AB54C0951F448B3500AEC098 /* Main.storyboard */,
-				AB54C0981F448B3500AEC098 /* Assets.xcassets */,
 				AB54C09A1F448B3500AEC098 /* LaunchScreen.storyboard */,
 				AB54C09D1F448B3500AEC098 /* Info.plist */,
 			);
@@ -187,7 +184,6 @@
 			files = (
 				AB54C09C1F448B3500AEC098 /* LaunchScreen.storyboard in Resources */,
 				AB54C0B91F449A8F00AEC098 /* Localizable.strings in Resources */,
-				AB54C0991F448B3500AEC098 /* Assets.xcassets in Resources */,
 				AB54C0971F448B3500AEC098 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

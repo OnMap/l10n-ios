@@ -1,15 +1,15 @@
 //
-//  UIBarButtonItem+.swift
+//  UIView+.swift
 //  OMLocalization
 //
-//  Created by Alex Alexandrovych on 13/11/2017.
+//  Created by Alex Alexandrovych on 14/11/2017.
 //
 
 import UIKit
 
 private var runtimeLocalizationKey: UInt8 = 0
 
-extension UIBarButtonItem {
+extension UIView {
 
     @IBInspectable
     public var localizationKey: String? {

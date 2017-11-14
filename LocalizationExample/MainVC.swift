@@ -12,17 +12,13 @@ import OMLocalization
 
 class MainVC: UIViewController, LiveUpdatable {
 
-    // MARK: - LiveUpdatable Dictionary
-
-    var localizedViews: [String: Localizable] = [:]
-
     // MARK: - Properties
 
     @IBOutlet private weak var storyboardLabel: UILabel!
 
     private lazy var codeLabel: UILabel = {
         let label = UILabel()
-        label.textKey = "Main.CodeLabel.Text"
+        label.localizationKey = "Main.CodeLabel"
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -45,7 +41,8 @@ class MainVC: UIViewController, LiveUpdatable {
         case .hebrew: language = .hebrew
         case .russian: language = .russian
         }
-        configureLocalizedViews(from: view, language: language)
+        startLiveUpdates(for: language)
     }
+
 }
 
