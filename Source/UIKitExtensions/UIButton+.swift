@@ -10,7 +10,6 @@ import UIKit
 private var runtimeNormalTitleKey: UInt8 = 0
 private var runtimeHighlightedTitleKey: UInt8 = 0
 private var runtimeSelectedTitleKey: UInt8 = 0
-private var runtimeFocusedTitleKey: UInt8 = 0
 private var runtimeDisabledTitleKey: UInt8 = 0
 
 extension UIButton: TitlesLocalizable {
@@ -22,6 +21,7 @@ extension UIButton: TitlesLocalizable {
         }
         set {
             objc_setAssociatedObject(self, &runtimeNormalTitleKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            setTitle(newValue, for: .normal)
         }
     }
 
@@ -32,6 +32,7 @@ extension UIButton: TitlesLocalizable {
         }
         set {
             objc_setAssociatedObject(self, &runtimeHighlightedTitleKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            setTitle(newValue, for: .highlighted)
         }
     }
 
@@ -42,16 +43,7 @@ extension UIButton: TitlesLocalizable {
         }
         set {
             objc_setAssociatedObject(self, &runtimeSelectedTitleKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-        }
-    }
-
-    @IBInspectable
-    public var focusedTitleKey: String? {
-        get {
-            return objc_getAssociatedObject(self, &runtimeFocusedTitleKey) as? String
-        }
-        set {
-            objc_setAssociatedObject(self, &runtimeFocusedTitleKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            setTitle(newValue, for: .selected)
         }
     }
 
@@ -62,6 +54,7 @@ extension UIButton: TitlesLocalizable {
         }
         set {
             objc_setAssociatedObject(self, &runtimeDisabledTitleKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            setTitle(newValue, for: .disabled)
         }
     }
 }

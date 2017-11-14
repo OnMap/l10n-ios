@@ -20,6 +20,7 @@ extension UISearchBar: TextLocalizable {
         }
         set {
             objc_setAssociatedObject(self, &runtimeTextKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            text = newValue
         }
     }
 }
@@ -33,6 +34,7 @@ extension UISearchBar: PlaceholderLocalizable {
         }
         set {
             objc_setAssociatedObject(self, &runtimePlaceholderKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            placeholder = newValue
         }
     }
 }
@@ -46,6 +48,7 @@ extension UISearchBar: PromptLocalizable {
         }
         set {
             objc_setAssociatedObject(self, &runtimePromptKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            prompt = newValue
         }
     }
 }

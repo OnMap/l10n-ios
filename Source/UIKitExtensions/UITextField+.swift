@@ -19,6 +19,7 @@ extension UITextField: TextLocalizable {
         }
         set {
             objc_setAssociatedObject(self, &runtimeTextKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            text = newValue
         }
     }
 }
@@ -32,6 +33,7 @@ extension UITextField: PlaceholderLocalizable {
         }
         set {
             objc_setAssociatedObject(self, &runtimePlaceholderKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            placeholder = newValue
         }
     }
 }

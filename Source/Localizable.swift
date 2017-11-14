@@ -28,6 +28,5 @@ protocol TitlesLocalizable: Localizable {
     var normalTitleKey: String? { get set }
     var highlightedTitleKey: String? { get set }
     var selectedTitleKey: String? { get set }
-    var focusedTitleKey: String? { get set }
     var disabledTitleKey: String? { get set }
 }

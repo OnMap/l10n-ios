@@ -18,6 +18,7 @@ extension UINavigationItem: TitleLocalizable {
         }
         set {
             objc_setAssociatedObject(self, &runtimeTitleKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            title = newValue
         }
     }
 }

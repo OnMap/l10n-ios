@@ -82,14 +82,24 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="promptKey" value="Main.SearchBar.Prompt"/>
                                 </userDefinedRuntimeAttributes>
                             </searchBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pcp-4t-jBh">
+                                <rect key="frame" x="15" y="208" width="345" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="normalTitleKey" value="Main.Button.Title"/>
+                                </userDefinedRuntimeAttributes>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="ksS-gF-3vh" firstAttribute="trailing" secondItem="pcp-4t-jBh" secondAttribute="trailing" constant="15" id="5M8-Pk-k40"/>
                             <constraint firstItem="ksS-gF-3vh" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ytV-ai-hhH" secondAttribute="trailing" constant="8" id="7Xe-ow-FGi"/>
+                            <constraint firstItem="pcp-4t-jBh" firstAttribute="top" secondItem="ksS-gF-3vh" secondAttribute="top" constant="144" id="Fx7-bw-IYB"/>
                             <constraint firstItem="ytV-ai-hhH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ksS-gF-3vh" secondAttribute="leading" constant="8" id="QBb-ql-YaB"/>
                             <constraint firstItem="Qv8-S4-lS7" firstAttribute="top" secondItem="ytV-ai-hhH" secondAttribute="bottom" constant="50" id="Xa3-ty-J47"/>
                             <constraint firstItem="Qv8-S4-lS7" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="bcO-xH-vqe"/>
                             <constraint firstItem="Qv8-S4-lS7" firstAttribute="centerX" secondItem="ksS-gF-3vh" secondAttribute="centerX" id="cw4-bl-lyP"/>
+                            <constraint firstItem="pcp-4t-jBh" firstAttribute="leading" secondItem="ksS-gF-3vh" secondAttribute="leading" constant="15" id="mGE-LY-jg3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ksS-gF-3vh"/>
                     </view>

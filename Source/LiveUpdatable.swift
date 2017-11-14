@@ -33,7 +33,7 @@ extension SearchBarLocalizedProperty: CustomStringConvertible {
 }
 
 enum ButtonLocalizedTitle: String {
-    case normal, highlighted, selected, focused, disabled
+    case normal, highlighted, selected, disabled
 }
 
 extension ButtonLocalizedTitle: CustomStringConvertible {
@@ -113,9 +113,6 @@ extension LiveUpdatable where Self: UIViewController {
                 if let selectedKey = titlesLocalizable.selectedTitleKey {
                     views[selectedKey] = titlesLocalizable
                 }
-                if let focusedKey = titlesLocalizable.focusedTitleKey {
-                    views[focusedKey] = titlesLocalizable
-                }
                 if let disabledKey = titlesLocalizable.disabledTitleKey {
                     views[disabledKey] = titlesLocalizable
                 }
@@ -139,7 +136,7 @@ extension LiveUpdatable where Self: UIViewController {
                 }
             }
             changes.deleted.forEach { _ in
-                print("LocalizationText was deleted")
+                print("LocalizedElement was deleted")
             }
         } else {
             // Initial
@@ -150,9 +147,18 @@ extension LiveUpdatable where Self: UIViewController {
     }
 
     private func updateLocalizables(with localizedElement: LocalizedElement) {
-        let view = localizedViews[localizedElement.key]
         let text = localizedElement.text
         let type = localizedElement.type ?? ""
+
+        guard let view = localizedViews[localizedElement.key] else {
+            print("""
+                An element with key \(localizedElement.key) and text \(text) exists,
+                but there is no such view in the view hierarchy:
+                """
+            )
+            localizedViews.forEach { print($0) }
+            return
+        }
 
         switch view {
         case let label as UILabel:
@@ -192,8 +198,6 @@ extension LiveUpdatable where Self: UIViewController {
                 state = .highlighted
             case ButtonLocalizedTitle.selected.description:
                 state = .selected
-            case ButtonLocalizedTitle.focused.description:
-                state = .focused
             case ButtonLocalizedTitle.disabled.description:
                 state = .disabled
             default:
@@ -201,13 +205,7 @@ extension LiveUpdatable where Self: UIViewController {
             }
             button.setTitle(text, for: state)
         default:
-            print("""
-                The key \(localizedElement.key) with text \(text) exists, but there is no view:
-                \(view.debugDescription)
-                in the view hierarchy:
-                """
-            )
-            localizedViews.forEach { print($0) }
+            print("View \(view) has unsupported type")
         }
     }
 }

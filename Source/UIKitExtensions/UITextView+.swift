@@ -18,6 +18,7 @@ extension UITextView: TextLocalizable {
         }
         set {
             objc_setAssociatedObject(self, &runtimeTextKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            text = newValue
         }
     }
 }
