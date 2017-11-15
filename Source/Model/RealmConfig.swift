@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-public enum RealmConfig {
+enum RealmConfig {
 
     case english, hebrew, russian
 

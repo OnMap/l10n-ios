@@ -5,4 +5,5 @@
   Created by Alex Alexandrovych on 16/08/2017.
   Copyright © 2017 Alex Alexandrovych. All rights reserved.
 */
-"Main.Label" = "hebrew text";
+"Main.CodeLabel" = "hebrew text";
+"Main.ChangeLanguageButton.Normal" = "normal bla hebrew button";

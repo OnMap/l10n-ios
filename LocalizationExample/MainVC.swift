@@ -18,6 +18,7 @@ class MainVC: UIViewController, LiveUpdatable {
 
     private lazy var codeLabel: UILabel = {
         let label = UILabel()
+        label.text = "I'm a button created programmatically"
         label.localizationKey = "Main.CodeLabel"
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -31,17 +32,10 @@ class MainVC: UIViewController, LiveUpdatable {
         view.addSubview(codeLabel)
         NSLayoutConstraint.activate([
             codeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            storyboardLabel.topAnchor.constraint(equalTo: codeLabel.bottomAnchor, constant: 30)
+            codeLabel.topAnchor.constraint(equalTo: storyboardLabel.bottomAnchor, constant: 50)
         ])
 
-        // LiveUpdatable configuration
-        let language: LocalizedLanguages
-        switch Localization.currentLanguage {
-        case .english: language = .english
-        case .hebrew: language = .hebrew
-        case .russian: language = .russian
-        }
-        startLiveUpdates(for: language)
+        startLiveUpdates()
     }
 
 }

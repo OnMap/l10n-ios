@@ -12,7 +12,7 @@ import RealmSwift
 import RxRealm
 import NSObject_Rx
 
-private let separator = "."
+let separator = "."
 
 enum TextFieldLocalizedProperty: String {
     case text, placeholder
@@ -44,17 +44,25 @@ extension ButtonLocalizedProperty: CustomStringConvertible {
     }
 }
 
+enum NavigationItemLocalizedProperty: String {
+    case text, prompt, backButtonTitle
+}
+
+extension NavigationItemLocalizedProperty: CustomStringConvertible {
+    var description: String {
+        return self.rawValue.capitalized
+    }
+}
+
 /*
  In order to receive live updates to a UIViewController it should implement LiveUpdatable protocol
  and then call startLiveUpdates(for: LocalizedLanguages) after all views were added to the view hierarchy
  */
 
-public typealias LocalizedLanguages = RealmConfig
-
-private var runtimeLocalizedViewsKey: UInt8 = 0
+private var runtimeLocalizedObjectsKey: UInt8 = 0
 
 public protocol LiveUpdatable: class {
-    func startLiveUpdates(for language: LocalizedLanguages)
+    func startLiveUpdates()
 }
 
 extension LiveUpdatable where Self: UIViewController {
@@ -62,12 +70,18 @@ extension LiveUpdatable where Self: UIViewController {
     /**
      Appends localized objects to dictionary and configures live updating
      */
-    public func startLiveUpdates(for language: LocalizedLanguages) {
+    public func startLiveUpdates() {
         localizedObjects = getLocalizedViews(from: view)
         if let key = navigationItem.localizationKey {
-            localizedObjects[key] = navigationItem
+            let properties: [NavigationItemLocalizedProperty] = [.text, .prompt, .backButtonTitle]
+            properties.forEach {
+                localizedObjects[key + separator + $0.description] = navigationItem
+            }
         }
-        configureLiveUpdating(for: language)
+        // Add bar button items keys
+        let keys = localizedObjects.map { $0.key }
+        LiveUpdatingService.postKeys(keys)
+        configureLiveUpdating()
     }
 
     // MARK: - Private
@@ -78,17 +92,23 @@ extension LiveUpdatable where Self: UIViewController {
      */
     private var localizedObjects: [String: AnyObject] {
         get {
-            return objc_getAssociatedObject(self, &runtimeLocalizedViewsKey) as! [String: AnyObject]
+            return objc_getAssociatedObject(self, &runtimeLocalizedObjectsKey) as! [String: AnyObject]
         }
         set {
-            objc_setAssociatedObject(self, &runtimeLocalizedViewsKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &runtimeLocalizedObjectsKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
         }
     }
 
     /**
      Observes changes in Realm for given languge and updates views
      */
-    private func configureLiveUpdating(for language: LocalizedLanguages) {
+    private func configureLiveUpdating() {
+        let language: RealmConfig
+        switch Localization.currentLanguage {
+        case .english: language = .english
+        case .hebrew: language = .hebrew
+        case .russian: language = .russian
+        }
         do {
             let realm = try Realm(realmConfig: language)
             let localizedElements = realm.objects(LocalizedElement.self)
@@ -116,31 +136,44 @@ extension LiveUpdatable where Self: UIViewController {
             view is UISearchBar ||
             view is UISegmentedControl {
 
-            guard let key = view.localizationKey else { return views }
-            views[key] = view
-
             switch view {
-            case is UITextField:
-                let properties: [TextFieldLocalizedProperty] = [.text, .placeholder]
-                properties.forEach {
-                    views[key + separator + $0.description] = view
+            case let label as UILabel:
+                if let key = label.localizationKey {
+                    views[key] = label
                 }
-            case is UIButton:
-                let properties: [ButtonLocalizedProperty] = [.normal, .selected, .highlighted, .disabled]
-                properties.forEach {
-                    views[key + separator + $0.description] = view
+            case let textView as UITextView:
+                if let key = textView.localizationKey {
+                    views[key] = textView
                 }
-            case is UISearchBar:
-                let properties: [SearchBarLocalizedProperty] = [.text, .placeholder, .prompt]
-                properties.forEach {
-                    views[key + separator + $0.description] = view
+            case let textField as UITextField:
+                if let key = textField.localizationKey {
+                    let properties: [TextFieldLocalizedProperty] = [.text, .placeholder]
+                    properties.forEach {
+                        views[key + separator + $0.description] = view
+                    }
+                }
+            case let button as UIButton:
+                if let key = button.localizationKey {
+                    let properties: [ButtonLocalizedProperty] = [.normal, .selected, .highlighted, .disabled]
+                    properties.forEach {
+                        views[key + separator + $0.description] = view
+                    }
+                }
+            case let searchBar as UISearchBar:
+                if let key = searchBar.localizationKey {
+                    let properties: [SearchBarLocalizedProperty] = [.text, .placeholder, .prompt]
+                    properties.forEach {
+                        views[key + separator + $0.description] = view
+                    }
                 }
             case let segmentedControl as UISegmentedControl:
-                (0..<segmentedControl.numberOfSegments).forEach { index in
-                    views[key + separator + String(index)] = segmentedControl
+                if let key = segmentedControl.localizationKey {
+                    (0..<segmentedControl.numberOfSegments).forEach { index in
+                        views[key + separator + String(index)] = segmentedControl
+                    }
                 }
             default:
-                break
+                print("View has unsupported type \(view)")
             }
             return views
         }
@@ -191,7 +224,14 @@ extension LiveUpdatable where Self: UIViewController {
         case let label as UILabel:
             label.text = text
         case let navigationItem as UINavigationItem:
-            navigationItem.title = text
+            switch type {
+            case NavigationItemLocalizedProperty.prompt.description:
+                navigationItem.prompt = text
+            case NavigationItemLocalizedProperty.backButtonTitle.description:
+                navigationItem.backBarButtonItem?.title = text
+            default:
+                navigationItem.title = text
+            }
         case let barButtonItem as UIBarButtonItem:
             barButtonItem.title = text
         case let textView as UITextView:

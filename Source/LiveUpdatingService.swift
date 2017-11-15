@@ -14,17 +14,27 @@ typealias JSONDictionary = [String: Any]
 
 public class LiveUpdatingService {
 
-    private enum Constants {
-        static let urlString = "https://parseltongue.onmap.co.il/v1/translations"
-    }
+    private static var appId: String!
+    private static var token: String!
 
     // MARK: - Public
 
-    public static func setup(appId: String) {
+    public static func setup(appId: String, token: String) {
+        LiveUpdatingService.appId = appId
+        LiveUpdatingService.token = token
         deleteExistingRealms()
-        let url = URL(string: Constants.urlString + "?app_id=" + appId)!
-        fetchAndParseAllLocalizedTexts(url: url)
-        configureLiveUpdating(url: url, appId: appId)
+        fetchAndParseAllLocalizedTexts()
+        configureLiveUpdating()
+    }
+
+    public static func postKeys(_ keys: [String]) {
+        let urlRequest = ParceltongueRouter.postKeys(appId: appId, keys: keys, token: token).asURLRequest()
+        let task = URLSession.shared.dataTask(with: urlRequest) { _, _, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+        task.resume()
     }
 
     // MARK: - Private
@@ -33,8 +43,8 @@ public class LiveUpdatingService {
         [RealmConfig.english, RealmConfig.hebrew, RealmConfig.russian].forEach { $0.delete() }
     }
 
-    private static func fetchAndParseAllLocalizedTexts(url: URL) {
-        let urlRequest = URLRequest(url: url)
+    private static func fetchAndParseAllLocalizedTexts() {
+        let urlRequest = ParceltongueRouter.getTranslations(appId).asURLRequest()
         let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if let error = error {
                 print(error.localizedDescription)
@@ -46,11 +56,17 @@ public class LiveUpdatingService {
             }
             do {
                 let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
-                if let jsonDictionary = jsonObject as? JSONDictionary {
-                    parseJSON(jsonDictionary)
-                } else {
+                guard let jsonDictionary = jsonObject as? JSONDictionary else {
                     print("Returned object is not a json dictionary:\n\(jsonObject)")
+                    return
                 }
+                if let status = jsonDictionary["status"] as? Int,
+                    let name = jsonDictionary["name"] as? String,
+                    let message = jsonDictionary["message"] as? String {
+                    print("Error \(status): \(name). \(message)")
+                    return
+                }
+                try parseJSON(jsonDictionary)
             } catch {
                 print(error.localizedDescription)
             }
@@ -58,7 +74,8 @@ public class LiveUpdatingService {
         task.resume()
     }
 
-    private static func configureLiveUpdating(url: URL, appId: String) {
+    private static func configureLiveUpdating() {
+        guard let url = ParceltongueRouter.getTranslations(appId).asURLRequest().url else { return }
         let socket = SocketIOClient(socketURL: url, config: [.log(false), .compress])
         socket.on(clientEvent: .connect) { data, ack in
             print("socket connected")
@@ -66,7 +83,11 @@ public class LiveUpdatingService {
         socket.on(appId) { data, ack in
             guard let json = data[0] as? JSONDictionary else { return }
             DispatchQueue.global(qos: .userInitiated).async {
-                parseJSON(json)
+                do {
+                    try parseJSON(json)
+                } catch {
+                    print("Could not parse received data from event: \(error.localizedDescription)")
+                }
             }
             socket.emitWithAck("canUpdate", 0).timingOut(after: 0) { _ in
                 socket.emit("updated")
@@ -75,30 +96,24 @@ public class LiveUpdatingService {
         socket.connect()
     }
 
-    private static func parseJSON(_ json: JSONDictionary) {
-        if let english = json["en"] as? JSONDictionary,
-            let englishRealm = try? Realm(realmConfig: .english) {
-            addLocalizedTexts(json: english, into: englishRealm)
+    private static func parseJSON(_ json: JSONDictionary) throws {
+        if let english = json["en"] as? JSONDictionary {
+            try addLocalizedTexts(json: english, into: .english)
         }
-        if let hebrew = json["he"] as? JSONDictionary,
-            let hebrewRealm = try? Realm(realmConfig: .hebrew) {
-            addLocalizedTexts(json: hebrew, into: hebrewRealm)
+        if let hebrew = json["he"] as? JSONDictionary {
+            try addLocalizedTexts(json: hebrew, into: .hebrew)
         }
-        if let russian = json["ru"] as? JSONDictionary,
-            let russianRealm = try? Realm(realmConfig: .russian) {
-            addLocalizedTexts(json: russian, into: russianRealm)
+        if let russian = json["ru"] as? JSONDictionary {
+            try addLocalizedTexts(json: russian, into: .russian)
         }
     }
 
-    private static func addLocalizedTexts(json: JSONDictionary, into realm: Realm) {
+    private static func addLocalizedTexts(json: JSONDictionary, into realmConfig: RealmConfig) throws {
         let localizedElements = json.flatMap { key, value -> LocalizedElement? in
             guard let text = value as? String else { return nil }
             return LocalizedElement(key: key, text: text)
         }
-        do {
-            try realm.write { realm.add(localizedElements, update: true) }
-        } catch {
-            print(error.localizedDescription)
-        }
+        let realm = try Realm(realmConfig: realmConfig)
+        try realm.write { realm.add(localizedElements, update: true) }
     }
 }

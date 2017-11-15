@@ -7,15 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		10E2B3E946C4CDA38C0AC29D /* Pods_LocalizationTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F4BBF9B813CCC15D9DACA1 /* Pods_LocalizationTest.framework */; };
 		91F6C49230B0C590D43C14F3 /* Pods_LocalizationExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F04141AD6FA8551D773B21BF /* Pods_LocalizationExample.framework */; };
 		AB54C0921F448B3500AEC098 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB54C0911F448B3500AEC098 /* AppDelegate.swift */; };
 		AB54C0941F448B3500AEC098 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB54C0931F448B3500AEC098 /* MainVC.swift */; };
 		AB54C0971F448B3500AEC098 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB54C0951F448B3500AEC098 /* Main.storyboard */; };
 		AB54C09C1F448B3500AEC098 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB54C09A1F448B3500AEC098 /* LaunchScreen.storyboard */; };
 		AB54C0A41F448E4F00AEC098 /* LanguageSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB54C0A31F448E4F00AEC098 /* LanguageSelectVC.swift */; };
-		AB54C0A61F448EDB00AEC098 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB54C0A51F448EDB00AEC098 /* Localization.swift */; };
-		AB54C0A81F448EE200AEC098 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB54C0A71F448EE200AEC098 /* Localizable.swift */; };
 		AB54C0B91F449A8F00AEC098 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB54C0BB1F449A8F00AEC098 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -30,8 +27,6 @@
 		AB54C09B1F448B3500AEC098 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB54C09D1F448B3500AEC098 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB54C0A31F448E4F00AEC098 /* LanguageSelectVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSelectVC.swift; sourceTree = "<group>"; };
-		AB54C0A51F448EDB00AEC098 /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
-		AB54C0A71F448EE200AEC098 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		AB54C0BA1F449A8F00AEC098 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AB54C0BC1F449A9000AEC098 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AB54C0BD1F449A9100AEC098 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -46,7 +41,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10E2B3E946C4CDA38C0AC29D /* Pods_LocalizationTest.framework in Frameworks */,
 				91F6C49230B0C590D43C14F3 /* Pods_LocalizationExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,8 +104,6 @@
 			isa = PBXGroup;
 			children = (
 				AB54C0BB1F449A8F00AEC098 /* Localizable.strings */,
-				AB54C0A51F448EDB00AEC098 /* Localization.swift */,
-				AB54C0A71F448EE200AEC098 /* Localizable.swift */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -265,8 +257,6 @@
 			files = (
 				AB54C0A41F448E4F00AEC098 /* LanguageSelectVC.swift in Sources */,
 				AB54C0941F448B3500AEC098 /* MainVC.swift in Sources */,
-				AB54C0A81F448EE200AEC098 /* Localizable.swift in Sources */,
-				AB54C0A61F448EDB00AEC098 /* Localization.swift in Sources */,
 				AB54C0921F448B3500AEC098 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,7 +409,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E5E8EE149BAC1FC154CFB818 /* Pods-LocalizationExample.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9RJC774R39;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -439,7 +428,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8D17D71C69E7A5023B44220C /* Pods-LocalizationExample.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9RJC774R39;
 				INFOPLIST_FILE = LocalizationExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

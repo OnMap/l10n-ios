@@ -5,4 +5,5 @@
   Created by Alex Alexandrovych on 16/08/2017.
   Copyright © 2017 Alex Alexandrovych. All rights reserved.
 */
-"Main.Label" = "russian text";
+"Main.CodeLabel" = "russian text";
+"Main.ChangeLanguageButton.Normal" = "normal russian button";
