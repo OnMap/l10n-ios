@@ -20,8 +20,8 @@ Pod::Spec.new do |s|
 
   s.dependency "RealmSwift", "~> 3.0.0"
   s.dependency "RxSwift", "~> 4.0.0"
-  s.dependency 'RxRealm', '~> 0.7.4'
+  s.dependency 'RxRealm', '~> 0.7.0'
   s.dependency 'NSObject+Rx', '~> 4.2.0'
-  s.dependency 'Socket.IO-Client-Swift', '~> 12.1.3'
+  s.dependency 'Socket.IO-Client-Swift', '~> 12.1.0'
 
 end
