@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "OMLocalization"
-  s.version      = "0.2"
+  s.version      = "0.3"
   s.summary      = "A tool for live remote localization."
   s.description  = <<-DESC
     This is an addition to the development process

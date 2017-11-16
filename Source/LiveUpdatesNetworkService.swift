@@ -1,5 +1,5 @@
 //
-//  LiveUpdatingService.swift
+//  LiveUpdatesNetworkService.swift
 //  OMLocalization
 //
 //  Created by Alex Alexandrovych on 17/08/2017.
@@ -12,7 +12,7 @@ import SocketIO
 
 typealias JSONDictionary = [String: Any]
 
-public class LiveUpdatingService {
+public class LiveUpdatesNetworkService {
 
     private static var appId: String!
     private static var token: String!
@@ -20,14 +20,14 @@ public class LiveUpdatingService {
     // MARK: - Public
 
     public static func setup(appId: String, token: String) {
-        LiveUpdatingService.appId = appId
-        LiveUpdatingService.token = token
+        LiveUpdatesNetworkService.appId = appId
+        LiveUpdatesNetworkService.token = token
         deleteExistingRealms()
         fetchAndParseAllLocalizedTexts()
         configureLiveUpdating()
     }
 
-    public static func postKeys(_ keys: [String]) {
+    static func postKeys(_ keys: [String]) {
         let urlRequest = ParceltongueRouter.postKeys(appId: appId, keys: keys, token: token).asURLRequest()
         let task = URLSession.shared.dataTask(with: urlRequest) { _, _, error in
             if let error = error {

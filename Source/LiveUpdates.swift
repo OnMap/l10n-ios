@@ -1,5 +1,5 @@
 //
-//  LiveUpdatable.swift
+//  LiveUpdates.swift
 //  OMLocalization
 //
 //  Created by Alex Alexandrovych on 16/08/2017.
@@ -20,7 +20,7 @@ enum TextFieldLocalizedProperty: String {
 
 extension TextFieldLocalizedProperty: CustomStringConvertible {
     var description: String {
-        return self.rawValue.capitalized
+        return rawValue.capitalized
     }
 }
 
@@ -30,7 +30,7 @@ enum SearchBarLocalizedProperty: String {
 
 extension SearchBarLocalizedProperty: CustomStringConvertible {
     var description: String {
-        return self.rawValue.capitalized
+        return rawValue.capitalized
     }
 }
 
@@ -40,7 +40,7 @@ enum ButtonLocalizedProperty: String {
 
 extension ButtonLocalizedProperty: CustomStringConvertible {
     var description: String {
-        return self.rawValue.capitalized
+        return rawValue.capitalized
     }
 }
 
@@ -50,59 +50,83 @@ enum NavigationItemLocalizedProperty: String {
 
 extension NavigationItemLocalizedProperty: CustomStringConvertible {
     var description: String {
-        return self.rawValue.capitalized
+        return rawValue.capitalized
     }
 }
 
-/*
- In order to receive live updates to a UIViewController it should implement LiveUpdatable protocol
- and then call startLiveUpdates(for: LocalizedLanguages) after all views were added to the view hierarchy
- */
+private var runtimeLocalizationKey: UInt8 = 0
 
-private var runtimeLocalizedObjectsKey: UInt8 = 0
+private extension UIViewController {
 
-public protocol LiveUpdatable: class {
-    func startLiveUpdates()
+    var liveUpdates: LiveUpdates? {
+        get {
+            return objc_getAssociatedObject(self, &runtimeLocalizationKey) as? LiveUpdates
+        }
+        set {
+            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+        }
+    }
 }
 
-extension LiveUpdatable where Self: UIViewController {
+public class LiveUpdates {
 
     /**
-     Appends localized objects to dictionary and configures live updating
+     Created for keeping references to all objects, that should be updated on-the-fly
      */
-    public func startLiveUpdates() {
-        localizedObjects = getLocalizedViews(from: view)
+    private var localizedObjects: [String: AnyObject] = [:]
+
+    private weak var viewController: UIViewController!
+
+    // MARK: Public API
+
+    public static func listenUpdates(for viewController: UIViewController) {
+        viewController.liveUpdates = LiveUpdates(viewController: viewController)
+    }
+
+    public static func stopListenUpdates(for viewController: UIViewController) {
+        viewController.liveUpdates?.stopListenUpdates()
+    }
+
+    // MARK: - Private
+
+    /**
+     Appends all localized objects to the dictionary and configures live updating
+     */
+    private init(viewController: UIViewController) {
+        self.viewController = viewController
+
+        // Populate objects that shoud be updated live
+        localizedObjects = getLocalizedViews(from: viewController.view)
+
+        // Adding NavigationItem and BarButtonItems because they are not in view hierarchy
+        let navigationItem = viewController.navigationItem
         if let key = navigationItem.localizationKey {
             let properties: [NavigationItemLocalizedProperty] = [.text, .prompt, .backButtonTitle]
             properties.forEach {
                 localizedObjects[key + separator + $0.description] = navigationItem
             }
         }
-        // Add bar button items keys
-        let keys = localizedObjects.map { $0.key }
-        LiveUpdatingService.postKeys(keys)
-        configureLiveUpdating()
+        let barButtonItems = [navigationItem.leftBarButtonItems ?? [], navigationItem.rightBarButtonItems ?? []]
+        barButtonItems.forEach { buttons in
+            buttons.forEach { button in
+                if let key = button.localizationKey {
+                    localizedObjects[key] = button
+                }
+            }
+        }
+
+        // Start observing changes
+        configureObservingChanges()
     }
 
-    // MARK: - Private
-
-    /**
-     Localized objects dictionary, created in runtime for keeping
-     references to all objects, that should be updated on-the-fly
-     */
-    private var localizedObjects: [String: AnyObject] {
-        get {
-            return objc_getAssociatedObject(self, &runtimeLocalizedObjectsKey) as! [String: AnyObject]
-        }
-        set {
-            objc_setAssociatedObject(self, &runtimeLocalizedObjectsKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-        }
+    private func stopListenUpdates() {
+        viewController.rx.disposeBag = DisposeBag()
     }
 
     /**
      Observes changes in Realm for given languge and updates views
      */
-    private func configureLiveUpdating() {
+    private func configureObservingChanges() {
         let language: RealmConfig
         switch Localization.currentLanguage {
         case .english: language = .english
@@ -116,7 +140,7 @@ extension LiveUpdatable where Self: UIViewController {
                 .subscribe(onNext: { [weak self] array, changes in
                     self?.updateViews(from: array, with: changes)
                 })
-                .disposed(by: rx.disposeBag)
+                .disposed(by: viewController.rx.disposeBag)
         } catch {
             print(error.localizedDescription)
         }
@@ -268,7 +292,7 @@ extension LiveUpdatable where Self: UIViewController {
         case let segmentedControl as UISegmentedControl:
             segmentedControl.setTitle(text, forSegmentAt: Int(type) ?? 0)
         default:
-            print("View \(view) has unsupported type")
+            print("Object \(object) has unsupported type")
         }
     }
 }

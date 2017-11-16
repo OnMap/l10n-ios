@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import OMLocalization
 
-class MainVC: UIViewController, LiveUpdatable {
+class MainVC: UIViewController {
 
     // MARK: - Properties
 
@@ -35,7 +35,7 @@ class MainVC: UIViewController, LiveUpdatable {
             codeLabel.topAnchor.constraint(equalTo: storyboardLabel.bottomAnchor, constant: 50)
         ])
 
-        startLiveUpdates()
+        LiveUpdates.listenUpdates(for: self)
     }
 
 }
