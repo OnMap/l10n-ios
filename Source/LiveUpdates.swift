@@ -63,7 +63,7 @@ private extension UIViewController {
             return objc_getAssociatedObject(self, &runtimeLocalizationKey) as? LiveUpdates
         }
         set {
-            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 }
