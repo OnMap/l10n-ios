@@ -14,7 +14,6 @@
 		C77A0BCA1FBF27BE00DC4E8C /* LiveUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BBF1FBF27BE00DC4E8C /* LiveUpdates.swift */; };
 		C77A0BCB1FBF27BE00DC4E8C /* RealmConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BC11FBF27BE00DC4E8C /* RealmConfig.swift */; };
 		C77A0BCC1FBF27BE00DC4E8C /* LocalizedElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BC21FBF27BE00DC4E8C /* LocalizedElement.swift */; };
-		C77A0BCE1FBF27BE00DC4E8C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C77A0BC41FBF27BE00DC4E8C /* Info.plist */; };
 		C77A0BCF1FBF27BE00DC4E8C /* OML10n.h in Headers */ = {isa = PBXBuildFile; fileRef = C77A0BC51FBF27BE00DC4E8C /* OML10n.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C77A0BD31FBF285700DC4E8C /* ParseltongueRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BD21FBF285700DC4E8C /* ParseltongueRouter.swift */; };
 		C77A0BDB1FBF313100DC4E8C /* LiveUpdatesNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BDA1FBF313100DC4E8C /* LiveUpdatesNetworkService.swift */; };
@@ -242,7 +241,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C77A0BCE1FBF27BE00DC4E8C /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

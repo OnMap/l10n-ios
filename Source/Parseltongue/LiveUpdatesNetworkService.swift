@@ -1,6 +1,6 @@
 //
 //  LiveUpdatesNetworkService.swift
-//  OMLocalization
+//  OML10n
 //
 //  Created by Alex Alexandrovych on 17/08/2017.
 //  Copyright © 2017 OnMap LTD. All rights reserved.
@@ -15,26 +15,14 @@ typealias JSONDictionary = [String: Any]
 public class LiveUpdatesNetworkService {
 
     private static var appId: String!
-    private static var token: String!
 
     // MARK: - Public
 
-    public static func setup(appId: String, token: String) {
+    public static func setup(appId: String) {
         LiveUpdatesNetworkService.appId = appId
-        LiveUpdatesNetworkService.token = token
         deleteExistingRealms()
         fetchAndParseAllLocalizedTexts()
         configureLiveUpdating()
-    }
-
-    static func postKeys(_ keys: [String]) {
-        let urlRequest = ParceltongueRouter.postKeys(appId: appId, keys: keys, token: token).asURLRequest()
-        let task = URLSession.shared.dataTask(with: urlRequest) { _, _, error in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-        }
-        task.resume()
     }
 
     // MARK: - Private
@@ -44,7 +32,7 @@ public class LiveUpdatesNetworkService {
     }
 
     private static func fetchAndParseAllLocalizedTexts() {
-        let urlRequest = ParceltongueRouter.getTranslations(appId).asURLRequest()
+        let urlRequest = ParseltongueRouter.getTranslations(appId).asURLRequest()
         let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if let error = error {
                 print(error.localizedDescription)
@@ -75,7 +63,7 @@ public class LiveUpdatesNetworkService {
     }
 
     private static func configureLiveUpdating() {
-        guard let url = ParceltongueRouter.getTranslations(appId).asURLRequest().url else { return }
+        guard let url = ParseltongueRouter.getTranslations(appId).asURLRequest().url else { return }
         let socket = SocketIOClient(socketURL: url, config: [.log(false), .compress])
         socket.on(clientEvent: .connect) { data, ack in
             print("socket connected")

@@ -23,10 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-//        Localization.setupCurrentLanguage()
-//        let appId = "f635ba15-0adf-42bc-b13e-88499a433f37"
-//        let token =  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoidGVsZW1hcmtldGluZyIsInVzZXJfaWQiOiJTSmdPVmNsa3oiLCJjcmVhdGVkIjoxNTEwMTUxMzY3MTg0LCJqdGkiOiJTeUpDVnFla00iLCJpYXQiOjE1MTAxNTEzNjcsImV4cCI6MTUxMjc0MzM2NywiaXNzIjoiT25NYXAgTFREIn0.-1L6za1Mh2mu5zoUykG-ZTnDeNDy9kqE4O37h74l6mo"
-//        LiveUpdatesNetworkService.setup(appId: appId, token: token)
+        Localization.setupCurrentLanguage()
+        let appId = "f635ba15-0adf-42bc-b13e-88499a433f37"
+        LiveUpdatesNetworkService.setup(appId: appId)
         return true
     }
 

@@ -1,6 +1,6 @@
 //
 //  UIKit+Localization.swift
-//  OMLocalization
+//  OML10n
 //
 //  Created by Alex Alexandrovych on 14/11/2017.
 //  Copyright © 2017 OnMap LTD. All rights reserved.

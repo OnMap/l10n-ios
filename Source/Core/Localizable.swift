@@ -1,6 +1,6 @@
 //
 //  Localizable.swift
-//  LocalizationExample
+//  OML10n
 //
 //  Created by Alex Alexandrovych on 04/05/2017.
 //  Copyright © 2017 OnMap LTD. All rights reserved.

@@ -1,6 +1,6 @@
 //
-//  ParceltongueRouter.swift
-//  OMLocalization
+//  ParseltongueRouter.swift
+//  OML10n
 //
 //  Created by Alex Alexandrovych on 15/11/2017.
 //  Copyright © 2017 OnMap LTD. All rights reserved.
@@ -10,7 +10,7 @@ import Foundation
 
 typealias Parameters = [String: Any]
 
-enum ParceltongueRouter {
+enum ParseltongueRouter {
 
     private static let baseUrl = "https://parseltongue.onmap.co.il/v1/"
 
@@ -37,11 +37,11 @@ enum ParceltongueRouter {
             let relativePath: String
             switch self {
             case .getTranslations(let appId):
-                return URL(string: ParceltongueRouter.baseUrl + "translations?app_id=\(appId)")!
+                return URL(string: ParseltongueRouter.baseUrl + "translations?app_id=\(appId)")!
             case .postKey, .postKeys:
                 relativePath = "keys"
             }
-            var url = URL(string: ParceltongueRouter.baseUrl)!
+            var url = URL(string: ParseltongueRouter.baseUrl)!
             url.appendPathComponent(relativePath)
             return url
         }()

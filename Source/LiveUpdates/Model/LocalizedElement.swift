@@ -1,6 +1,6 @@
 //
 //  LocalizedElement.swift
-//  OMLocalization
+//  OML10n
 //
 //  Created by Alex Alexandrovych on 16/08/2017.
 //  Copyright © 2017 OnMap LTD. All rights reserved.
