@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import OMLocalization
+import OML10n
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

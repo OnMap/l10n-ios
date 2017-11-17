@@ -8,7 +8,7 @@
 
 import UIKit
 import RxSwift
-import OMLocalization
+import OML10n
 
 class MainVC: UIViewController {
 
