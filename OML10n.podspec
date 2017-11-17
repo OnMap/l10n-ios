@@ -7,10 +7,10 @@ Pod::Spec.new do |s|
     This is an addition to the development process
     for handling remote localization on-the-fly
                    DESC
-  s.homepage     = "https://github.com/OnMap/OML10n-iOS"
+  s.homepage     = "https://github.com/OnMap/L10n-iOS"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.author       = { "OnMap" => "info@onmap.co.il" }
-  s.source       = { :git => "https://github.com/OnMap/OML10n-iOS.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/OnMap/L10n-iOS.git", :tag => "#{s.version}" }
 
   s.platform     = :ios, "9.0"  
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
