@@ -19,7 +19,8 @@ matrix:
 
 before_install:
   - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
-
+  - pod repo update
+  
 script:
   - set -o pipefail
   - xcodebuild -version
