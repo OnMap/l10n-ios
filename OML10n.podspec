@@ -21,14 +21,9 @@ Pod::Spec.new do |s|
     core.source_files = 'Source/Core/**/*.{swift,stringsdict}'
   end
 
-  s.subspec 'IBInspectable' do |inspectable|
-    inspectable.dependency 'OML10n/Core'
-    inspectable.source_files = 'Source/IBInspectable/**/*.swift'
-  end
-
   s.subspec 'LiveUpdates' do |liveupdates|
-    liveupdates.dependency 'OML10n/Core'
     liveupdates.source_files = 'Source/LiveUpdates/**/*.swift'
+    liveupdates.dependency 'OML10n/Core'
     liveupdates.dependency "RealmSwift", "~> 3.0.0"
     liveupdates.dependency "RxSwift", "~> 4.0.0"
     liveupdates.dependency 'RxRealm', '~> 0.7.0'
@@ -36,8 +31,8 @@ Pod::Spec.new do |s|
   end
   
   s.subspec 'Parseltongue' do |parseltongue|
+    parseltongue.source_files = 'Source/Parseltongue/**/*.swift'
     parseltongue.dependency 'OML10n/LiveUpdates'
-    parseltongue.source_files = 'Source/LiveUpdates/**/*.swift'
     parseltongue.dependency 'Socket.IO-Client-Swift', '~> 12.1.0'    
   end
 

@@ -10,6 +10,24 @@ import UIKit
 
 private var runtimeLocalizationKey: UInt8 = 0
 
+let separator = "."
+
+enum TextFieldLocalizedProperty: String {
+    case text, placeholder
+}
+
+enum ButtonLocalizedProperty: String {
+    case normal, highlighted, selected, disabled
+}
+
+enum NavigationItemLocalizedProperty: String {
+    case text, prompt, backButtonTitle
+}
+
+enum SearchBarLocalizedProperty: String {
+    case text, placeholder, prompt
+}
+
 extension UIButton {
 
     @IBInspectable
@@ -174,5 +192,31 @@ extension UIBarButtonItem {
             guard let newValue = newValue, !newValue.isEmpty else { return }
             title = localized(newValue)
         }
+    }
+}
+
+// LocalizedProperty extension
+
+extension TextFieldLocalizedProperty: CustomStringConvertible {
+    var description: String {
+        return rawValue.capitalized
+    }
+}
+
+extension SearchBarLocalizedProperty: CustomStringConvertible {
+    var description: String {
+        return rawValue.capitalized
+    }
+}
+
+extension ButtonLocalizedProperty: CustomStringConvertible {
+    var description: String {
+        return rawValue.capitalized
+    }
+}
+
+extension NavigationItemLocalizedProperty: CustomStringConvertible {
+    var description: String {
+        return rawValue.capitalized
     }
 }

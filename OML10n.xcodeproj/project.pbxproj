@@ -10,13 +10,13 @@
 		3CB5E360C8F6AD52B20A59AD /* Pods_OML10n.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6BBBDA7BABC5DDA7E99CC9 /* Pods_OML10n.framework */; };
 		C77A0BC61FBF27BE00DC4E8C /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BB81FBF27BE00DC4E8C /* Localization.swift */; };
 		C77A0BC71FBF27BE00DC4E8C /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BB91FBF27BE00DC4E8C /* Localizable.swift */; };
-		C77A0BC91FBF27BE00DC4E8C /* UIKit+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BBD1FBF27BE00DC4E8C /* UIKit+Localization.swift */; };
 		C77A0BCA1FBF27BE00DC4E8C /* LiveUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BBF1FBF27BE00DC4E8C /* LiveUpdates.swift */; };
 		C77A0BCB1FBF27BE00DC4E8C /* RealmConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BC11FBF27BE00DC4E8C /* RealmConfig.swift */; };
 		C77A0BCC1FBF27BE00DC4E8C /* LocalizedElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BC21FBF27BE00DC4E8C /* LocalizedElement.swift */; };
 		C77A0BCF1FBF27BE00DC4E8C /* OML10n.h in Headers */ = {isa = PBXBuildFile; fileRef = C77A0BC51FBF27BE00DC4E8C /* OML10n.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C77A0BD31FBF285700DC4E8C /* ParseltongueRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BD21FBF285700DC4E8C /* ParseltongueRouter.swift */; };
 		C77A0BDB1FBF313100DC4E8C /* LiveUpdatesNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BDA1FBF313100DC4E8C /* LiveUpdatesNetworkService.swift */; };
+		C77A0BE61FC0229C00DC4E8C /* UIKit+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BE51FC0229B00DC4E8C /* UIKit+Localization.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,6 @@
 		C77A0BA91FBF24FA00DC4E8C /* OML10n.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OML10n.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77A0BB81FBF27BE00DC4E8C /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		C77A0BB91FBF27BE00DC4E8C /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
-		C77A0BBD1FBF27BE00DC4E8C /* UIKit+Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Localization.swift"; sourceTree = "<group>"; };
 		C77A0BBF1FBF27BE00DC4E8C /* LiveUpdates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveUpdates.swift; sourceTree = "<group>"; };
 		C77A0BC11FBF27BE00DC4E8C /* RealmConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmConfig.swift; sourceTree = "<group>"; };
 		C77A0BC21FBF27BE00DC4E8C /* LocalizedElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedElement.swift; sourceTree = "<group>"; };
@@ -36,6 +35,7 @@
 		C77A0BD71FBF28BB00DC4E8C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C77A0BD81FBF28BB00DC4E8C /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		C77A0BDA1FBF313100DC4E8C /* LiveUpdatesNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveUpdatesNetworkService.swift; sourceTree = "<group>"; };
+		C77A0BE51FC0229B00DC4E8C /* UIKit+Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Localization.swift"; sourceTree = "<group>"; };
 		CD6BBBDA7BABC5DDA7E99CC9 /* Pods_OML10n.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OML10n.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -100,7 +100,6 @@
 			isa = PBXGroup;
 			children = (
 				C77A0BB71FBF27BE00DC4E8C /* Core */,
-				C77A0BBC1FBF27BE00DC4E8C /* IBInspectable */,
 				C77A0BBE1FBF27BE00DC4E8C /* LiveUpdates */,
 				C77A0BD11FBF285700DC4E8C /* Parseltongue */,
 				C77A0BD01FBF27FD00DC4E8C /* Supporting Files */,
@@ -113,16 +112,9 @@
 			children = (
 				C77A0BB81FBF27BE00DC4E8C /* Localization.swift */,
 				C77A0BB91FBF27BE00DC4E8C /* Localizable.swift */,
+				C77A0BE51FC0229B00DC4E8C /* UIKit+Localization.swift */,
 			);
 			path = Core;
-			sourceTree = "<group>";
-		};
-		C77A0BBC1FBF27BE00DC4E8C /* IBInspectable */ = {
-			isa = PBXGroup;
-			children = (
-				C77A0BBD1FBF27BE00DC4E8C /* UIKit+Localization.swift */,
-			);
-			path = IBInspectable;
 			sourceTree = "<group>";
 		};
 		C77A0BBE1FBF27BE00DC4E8C /* LiveUpdates */ = {
@@ -291,8 +283,8 @@
 				C77A0BCC1FBF27BE00DC4E8C /* LocalizedElement.swift in Sources */,
 				C77A0BC71FBF27BE00DC4E8C /* Localizable.swift in Sources */,
 				C77A0BDB1FBF313100DC4E8C /* LiveUpdatesNetworkService.swift in Sources */,
-				C77A0BC91FBF27BE00DC4E8C /* UIKit+Localization.swift in Sources */,
 				C77A0BD31FBF285700DC4E8C /* ParseltongueRouter.swift in Sources */,
+				C77A0BE61FC0229C00DC4E8C /* UIKit+Localization.swift in Sources */,
 				C77A0BC61FBF27BE00DC4E8C /* Localization.swift in Sources */,
 				C77A0BCB1FBF27BE00DC4E8C /* RealmConfig.swift in Sources */,
 			);

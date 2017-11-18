@@ -12,48 +12,6 @@ import RealmSwift
 import RxRealm
 import NSObject_Rx
 
-let separator = "."
-
-enum TextFieldLocalizedProperty: String {
-    case text, placeholder
-}
-
-extension TextFieldLocalizedProperty: CustomStringConvertible {
-    var description: String {
-        return rawValue.capitalized
-    }
-}
-
-enum SearchBarLocalizedProperty: String {
-    case text, placeholder, prompt
-}
-
-extension SearchBarLocalizedProperty: CustomStringConvertible {
-    var description: String {
-        return rawValue.capitalized
-    }
-}
-
-enum ButtonLocalizedProperty: String {
-    case normal, highlighted, selected, disabled
-}
-
-extension ButtonLocalizedProperty: CustomStringConvertible {
-    var description: String {
-        return rawValue.capitalized
-    }
-}
-
-enum NavigationItemLocalizedProperty: String {
-    case text, prompt, backButtonTitle
-}
-
-extension NavigationItemLocalizedProperty: CustomStringConvertible {
-    var description: String {
-        return rawValue.capitalized
-    }
-}
-
 private var runtimeLocalizationKey: UInt8 = 0
 
 private extension UIViewController {

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RealmSwift
 
 /**
  Returns localized text for given key or key if text doesn't exists or is empty
