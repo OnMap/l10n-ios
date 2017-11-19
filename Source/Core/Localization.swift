@@ -112,7 +112,7 @@ extension Bundle {
     }
 }
 
-extension DispatchQueue {
+public extension DispatchQueue {
 
     private static var _onceTracker = [String]()
 
