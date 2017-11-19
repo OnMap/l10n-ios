@@ -21,7 +21,7 @@ enum ButtonLocalizedProperty: String {
 }
 
 enum NavigationItemLocalizedProperty: String {
-    case text, prompt, backButtonTitle
+    case title, prompt, backButtonTitle
 }
 
 enum SearchBarLocalizedProperty: String {
@@ -177,7 +177,7 @@ extension UINavigationItem {
             objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
             guard let newValue = newValue, !newValue.isEmpty else { return }
 
-            title = localized(newValue + separator + NavigationItemLocalizedProperty.text.description)
+            title = localized(newValue + separator + NavigationItemLocalizedProperty.title.description)
 
             let promptKey = newValue + separator + NavigationItemLocalizedProperty.prompt.description
             let prompt = localized(promptKey)

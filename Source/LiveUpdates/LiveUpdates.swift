@@ -59,7 +59,8 @@ public class LiveUpdates {
         // Adding NavigationItem and BarButtonItems because they are not in view hierarchy
         let navigationItem = viewController.navigationItem
         if let key = navigationItem.localizationKey {
-            let properties: [NavigationItemLocalizedProperty] = [.text, .prompt, .backButtonTitle]
+            localizedObjects[key] = navigationItem
+            let properties: [NavigationItemLocalizedProperty] = [.title, .prompt, .backButtonTitle]
             properties.forEach {
                 localizedObjects[key + separator + $0.description] = navigationItem
             }
@@ -129,6 +130,7 @@ public class LiveUpdates {
                 }
             case let textField as UITextField:
                 if let key = textField.localizationKey {
+                    views[key] = textField
                     let properties: [TextFieldLocalizedProperty] = [.text, .placeholder]
                     properties.forEach {
                         views[key + separator + $0.description] = view
@@ -136,6 +138,7 @@ public class LiveUpdates {
                 }
             case let button as UIButton:
                 if let key = button.localizationKey {
+                    views[key] = button
                     let properties: [ButtonLocalizedProperty] = [.normal, .selected, .highlighted, .disabled]
                     properties.forEach {
                         views[key + separator + $0.description] = view
@@ -143,6 +146,7 @@ public class LiveUpdates {
                 }
             case let searchBar as UISearchBar:
                 if let key = searchBar.localizationKey {
+                    views[key] = searchBar
                     let properties: [SearchBarLocalizedProperty] = [.text, .placeholder, .prompt]
                     properties.forEach {
                         views[key + separator + $0.description] = view
@@ -150,6 +154,7 @@ public class LiveUpdates {
                 }
             case let segmentedControl as UISegmentedControl:
                 if let key = segmentedControl.localizationKey {
+                    views[key] = segmentedControl
                     (0..<segmentedControl.numberOfSegments).forEach { index in
                         views[key + separator + String(index)] = segmentedControl
                     }
@@ -207,6 +212,8 @@ public class LiveUpdates {
             label.text = text
         case let navigationItem as UINavigationItem:
             switch type {
+            case NavigationItemLocalizedProperty.title.description:
+                navigationItem.title = text
             case NavigationItemLocalizedProperty.prompt.description:
                 navigationItem.prompt = text
             case NavigationItemLocalizedProperty.backButtonTitle.description:
@@ -220,23 +227,29 @@ public class LiveUpdates {
             textView.text = text
         case let textField as UITextField:
             switch type {
+            case TextFieldLocalizedProperty.text.description:
+                textField.text = text
             case TextFieldLocalizedProperty.placeholder.description:
                 textField.placeholder = text
             default:
-                textField.text = text
+                textField.placeholder = text
             }
         case let searchBar as UISearchBar:
             switch type {
+            case SearchBarLocalizedProperty.text.description:
+                searchBar.text = text
             case SearchBarLocalizedProperty.placeholder.description:
                 searchBar.placeholder = text
             case SearchBarLocalizedProperty.prompt.description:
                 searchBar.prompt = text
             default:
-                searchBar.text = text
+                searchBar.placeholder = text
             }
         case let button as UIButton:
             let state: UIControlState
             switch type {
+            case ButtonLocalizedProperty.normal.description:
+                state = .normal
             case ButtonLocalizedProperty.highlighted.description:
                 state = .highlighted
             case ButtonLocalizedProperty.selected.description:
