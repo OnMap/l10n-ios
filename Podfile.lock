@@ -1,30 +1,50 @@
 PODS:
-  - Realm (2.9.1):
-    - Realm/Headers (= 2.9.1)
-  - Realm/Headers (2.9.1)
-  - RealmSwift (2.9.1):
-    - Realm (= 2.9.1)
-  - RxRealm (0.6.0):
-    - RealmSwift (~> 2.5)
-    - RxSwift (~> 3.2)
-  - RxSwift (3.6.1)
-  - Socket.IO-Client-Swift (11.0.2):
-    - StarscreamSocketIO (~> 8.0.2)
-  - StarscreamSocketIO (8.0.2)
+  - NSObject+Rx (4.2.0):
+    - RxSwift (~> 4.0)
+  - OML10n (0.1):
+    - OML10n/Core (= 0.1)
+    - OML10n/LiveUpdates (= 0.1)
+    - OML10n/Parseltongue (= 0.1)
+  - OML10n/Core (0.1)
+  - OML10n/LiveUpdates (0.1):
+    - NSObject+Rx (~> 4.2.0)
+    - OML10n/Core
+    - RealmSwift (~> 3.0.0)
+    - RxRealm (~> 0.7.0)
+    - RxSwift (~> 4.0.0)
+  - OML10n/Parseltongue (0.1):
+    - OML10n/LiveUpdates
+    - Socket.IO-Client-Swift (~> 12.1.0)
+  - Realm (3.0.1):
+    - Realm/Headers (= 3.0.1)
+  - Realm/Headers (3.0.1)
+  - RealmSwift (3.0.1):
+    - Realm (= 3.0.1)
+  - RxRealm (0.7.4):
+    - RealmSwift (~> 3.0)
+    - RxSwift (~> 4.0)
+  - RxSwift (4.0.0)
+  - Socket.IO-Client-Swift (12.1.2):
+    - Starscream (~> 2.1.1)
+  - Starscream (2.1.1)
 
 DEPENDENCIES:
-  - RealmSwift (~> 2.9.1)
-  - RxRealm (~> 0.6.0)
-  - Socket.IO-Client-Swift
+  - OML10n (from `.`)
+
+EXTERNAL SOURCES:
+  OML10n:
+    :path: .
 
 SPEC CHECKSUMS:
-  Realm: f91fb43bd474c4f731a116ebf7392c75dd015920
-  RealmSwift: 207f12a4a36b696c5183c60a1c06d70234a23e56
-  RxRealm: 323de579b50b5e0f4a3e087d5925021f976ffaf1
-  RxSwift: f9de85ea20cd2f7716ee5409fc13523dc638e4e4
-  Socket.IO-Client-Swift: 17d4daf85d74125c33481d9bc40cbe678f0d631a
-  StarscreamSocketIO: c02ffb2920bd38de6658ce213071fc4ae0e35423
+  NSObject+Rx: cbbc05e3cb3ad446cdbced3e00e39c9efaf02925
+  OML10n: 8d041cd241619fca920ed8e053ea627d7b075739
+  Realm: ba6144c74f835f7497791f6599d63a7755377b83
+  RealmSwift: 7d13b1ac4b6022a13f841e3143e7789c9e40ad0d
+  RxRealm: 9e203070a6adadd8f2592b58bbc9c8cc40aa35ec
+  RxSwift: fd680d75283beb5e2559486f3c0ff852f0d35334
+  Socket.IO-Client-Swift: ba3cb1c4bf0a6ca90080406a2c22685c25ad1f60
+  Starscream: 142bd8ef24592d985daee9fa48c936070b85b15f
 
-PODFILE CHECKSUM: cf6ba202b48883a10a6e17aa34a059f3e5535417
+PODFILE CHECKSUM: 35258914aded8b4439f53ec170466220f1ead8cd
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

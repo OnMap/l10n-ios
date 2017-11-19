@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  LocalizationExample
+
+  Created by Alex Alexandrovych on 16/08/2017.
+  Copyright © 2017 Alex Alexandrovych. All rights reserved.
+*/
+
+"Main.CodeLabel" = "english text";
+"Main.ChangeLanguageButton.Normal" = "normal bla button";

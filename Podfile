@@ -1,13 +1,17 @@
-# Uncomment the next line to define a global platform for your project
+source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
+use_frameworks!
 
-target 'LocalizationTest' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
+workspace 'OML10n'
 
-  # Pods for LocalizationTest
-  pod 'RealmSwift', '~> 2.9.1'
-  pod 'RxRealm', '~> 0.6.0'
-  pod 'Socket.IO-Client-Swift'
+target 'OML10n' do
+  project 'OML10n.xcodeproj'  
+  pod 'OML10n', :path => '.'
+
+end
+
+target 'Example' do
+  project 'Example/iOS Example.xcodeproj'    
+  pod 'OML10n', :path => '.'
 
 end
