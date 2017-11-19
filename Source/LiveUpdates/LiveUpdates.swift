@@ -155,7 +155,7 @@ public class LiveUpdates {
                     }
                 }
             default:
-                print("View has unsupported type \(view)")
+                break
             }
             return views
         }

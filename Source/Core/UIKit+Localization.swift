@@ -80,7 +80,12 @@ extension UITextField {
         set {
             objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
             guard let newValue = newValue, !newValue.isEmpty else { return }
-            text = localized(newValue + separator + TextFieldLocalizedProperty.text.description)
+
+            let textKey = newValue + separator + TextFieldLocalizedProperty.text.description
+            let text = localized(textKey)
+            if text != textKey {
+                self.text = text
+            }
 
             let placeholderKey = newValue + separator + TextFieldLocalizedProperty.placeholder.description
             let placeholder = localized(placeholderKey)
@@ -101,7 +106,11 @@ extension UITextView {
         set {
             objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
             guard let newValue = newValue, !newValue.isEmpty else { return }
-            text = localized(newValue)
+
+            let text = localized(newValue)
+            if text != newValue {
+                self.text = text
+            }
         }
     }
 }
@@ -116,7 +125,12 @@ extension UISearchBar {
         set {
             objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
             guard let newValue = newValue, !newValue.isEmpty else { return }
-            text = localized(newValue + separator + SearchBarLocalizedProperty.text.description)
+
+            let textKey = newValue + separator + SearchBarLocalizedProperty.text.description
+            let text = localized(textKey)
+            if text != textKey {
+                self.text = text
+            }
 
             let placeholderKey = newValue + separator + SearchBarLocalizedProperty.placeholder.description
             let placeholder = localized(placeholderKey)
