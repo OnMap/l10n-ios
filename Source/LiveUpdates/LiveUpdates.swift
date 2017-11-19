@@ -209,7 +209,12 @@ public class LiveUpdates {
 
         switch object {
         case let label as UILabel:
-            label.text = text
+            if let mutableAttributedText = label.attributedText?.mutableCopy() as? NSMutableAttributedString {
+                mutableAttributedText.mutableString.setString(text)
+                label.attributedText = mutableAttributedText as NSAttributedString
+            } else {
+                label.text = text
+            }
         case let navigationItem as UINavigationItem:
             switch type {
             case NavigationItemLocalizedProperty.title.description:
@@ -224,11 +229,21 @@ public class LiveUpdates {
         case let barButtonItem as UIBarButtonItem:
             barButtonItem.title = text
         case let textView as UITextView:
-            textView.text = text
+            if let mutableAttributedText = textView.attributedText?.mutableCopy() as? NSMutableAttributedString {
+                mutableAttributedText.mutableString.setString(text)
+                textView.attributedText = mutableAttributedText as NSAttributedString
+            } else {
+                textView.text = text
+            }
         case let textField as UITextField:
             switch type {
             case TextFieldLocalizedProperty.text.description:
-                textField.text = text
+                if let mutableAttributedText = textField.attributedText?.mutableCopy() as? NSMutableAttributedString {
+                    mutableAttributedText.mutableString.setString(text)
+                    textField.attributedText = mutableAttributedText as NSAttributedString
+                } else {
+                    textField.text = text
+                }
             case TextFieldLocalizedProperty.placeholder.description:
                 textField.placeholder = text
             default:
@@ -259,7 +274,14 @@ public class LiveUpdates {
             default:
                 state = .normal
             }
-            button.setTitle(text, for: state)
+
+            if let mutableAttributedText = button.attributedTitle(for: state)?.mutableCopy() as? NSMutableAttributedString {
+                mutableAttributedText.mutableString.setString(text)
+                let attributedText = mutableAttributedText as NSAttributedString
+                button.setAttributedTitle(attributedText, for: state)
+            } else {
+                button.setTitle(text, for: state)
+            }
         case let segmentedControl as UISegmentedControl:
             segmentedControl.setTitle(text, forSegmentAt: Int(type) ?? 0)
         default:

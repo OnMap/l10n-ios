@@ -13,5 +13,5 @@ end
 target 'Example' do
   project 'Example/iOS Example.xcodeproj'    
   pod 'OML10n', :path => '.'
-  
-end  
+
+end

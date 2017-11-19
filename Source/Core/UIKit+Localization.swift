@@ -48,7 +48,13 @@ extension UIButton {
                 let key = newValue + separator + property.description
                 let text = localized(key)
                 if text != key || state == .normal {
-                    setTitle(text, for: state)
+                    if let mutableAttributedText = attributedTitle(for: state)?.mutableCopy() as? NSMutableAttributedString {
+                        mutableAttributedText.mutableString.setString(text)
+                        let attributedText = mutableAttributedText as NSAttributedString
+                        setAttributedTitle(attributedText, for: state)
+                    } else {
+                        setTitle(text, for: state)
+                    }
                 }
             }
         }
@@ -65,7 +71,12 @@ extension UILabel {
         set {
             objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
             guard let newValue = newValue, !newValue.isEmpty else { return }
-            text = localized(newValue)
+            if let mutableAttributedText = attributedText?.mutableCopy() as? NSMutableAttributedString {
+                mutableAttributedText.mutableString.setString(localized(newValue))
+                attributedText = mutableAttributedText as NSAttributedString
+            } else {
+                text = localized(newValue)
+            }
         }
     }
 }
@@ -82,9 +93,15 @@ extension UITextField {
             guard let newValue = newValue, !newValue.isEmpty else { return }
 
             let textKey = newValue + separator + TextFieldLocalizedProperty.text.description
+
             let text = localized(textKey)
             if text != textKey {
-                self.text = text
+                if let mutableAttributedText = attributedText?.mutableCopy() as? NSMutableAttributedString {
+                    mutableAttributedText.mutableString.setString(text)
+                    attributedText = mutableAttributedText as NSAttributedString
+                } else {
+                    self.text = text
+                }
             }
 
             let placeholderKey = newValue + separator + TextFieldLocalizedProperty.placeholder.description
@@ -109,7 +126,12 @@ extension UITextView {
 
             let text = localized(newValue)
             if text != newValue {
-                self.text = text
+                if let mutableAttributedText = attributedText?.mutableCopy() as? NSMutableAttributedString {
+                    mutableAttributedText.mutableString.setString(text)
+                    attributedText = mutableAttributedText as NSAttributedString
+                } else {
+                    self.text = text
+                }
             }
         }
     }
