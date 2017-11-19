@@ -2,7 +2,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 use_frameworks!
 
-workspace 'OML10n.wcworkspace'
+workspace 'OML10n'
 
 target 'OML10n' do
   project 'OML10n.xcodeproj'  
