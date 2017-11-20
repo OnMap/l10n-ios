@@ -17,7 +17,7 @@
                BlueprintIdentifier = "C77A0B451FBF209900DC4E8C"
                BuildableName = "Example.app"
                BlueprintName = "Example"
-               ReferencedContainer = "container:iOS Example.xcodeproj">
+               ReferencedContainer = "container:Example.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -27,7 +27,8 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       language = ""
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
       </Testables>
       <MacroExpansion>
@@ -36,7 +37,7 @@
             BlueprintIdentifier = "C77A0B451FBF209900DC4E8C"
             BuildableName = "Example.app"
             BlueprintName = "Example"
-            ReferencedContainer = "container:iOS Example.xcodeproj">
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -60,7 +61,7 @@
             BlueprintIdentifier = "C77A0B451FBF209900DC4E8C"
             BuildableName = "Example.app"
             BlueprintName = "Example"
-            ReferencedContainer = "container:iOS Example.xcodeproj">
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -79,7 +80,7 @@
             BlueprintIdentifier = "C77A0B451FBF209900DC4E8C"
             BuildableName = "Example.app"
             BlueprintName = "Example"
-            ReferencedContainer = "container:iOS Example.xcodeproj">
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

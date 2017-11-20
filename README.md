@@ -1,1 +1,71 @@
-# Localization
+[![Build Status](https://travis-ci.org/OnMap/OML10n.svg?branch=master)](https://travis-ci.org/OnMap/OML10n)
+[![Platforms](https://img.shields.io/cocoapods/p/OML10n.svg?style=flat)](https://github.com/OnMap/OML10n)
+[![Cocoapods](https://img.shields.io/cocoapods/v/OML10n.svg)](https://cocoapods.org/pods/OML10n)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-Compatible-brightgreen.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![codecov](https://codecov.io/gh/OML10n/OML10n/branch/master/graph/badge.svg)](https://codecov.io/gh/OML10n/OML10n)
+[![CocoaPods](https://img.shields.io/cocoapods/dt/OML10n.svg)](https://cocoapods.org/pods/OML10n)
+[![CocoaPods](https://img.shields.io/cocoapods/dm/OML10n.svg)](https://cocoapods.org/pods/OML10n)
+[![Codebeat](https://codebeat.co/badges/ce045eb7-1f32-43a2-abfd-b86da88b5704)](https://codebeat.co/projects/github-com-onmap-l10n-ios-master)
+[![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg)](https://swift.org)
+[![Xcode](https://img.shields.io/badge/Xcode-9.0-blue.svg)](https://developer.apple.com/xcode)
+
+## Requirements
+
+- iOS 9.0+
+- Xcode 9.0+
+- Swift 4.0+
+
+## Installation
+
+<details>
+<summary>CocoaPods</summary>
+</br>
+<p>To integrate OML10n into your Xcode project using <a href="http://cocoapods.org">CocoaPods</a>, specify it in your <code>Podfile</code>:</p>
+
+<h4>- Integrate All (recommended):</h4>
+<pre><code class="ruby language-ruby">pod 'OML10n'</code></pre>
+
+<h4>- Integrate Core only:</h4>
+<pre><code class="ruby language-ruby">pod 'OML10n/Core'</code></pre>
+
+<h4>- Integrate LiveUpdates:</h4>
+<pre><code class="ruby language-ruby">pod 'OML10n/LiveUpdates'</code></pre>
+
+<h4>- Integrate Parseltongue:</h4>
+<pre><code class="ruby language-ruby">pod 'OML10n/Parseltongue'</code></pre>
+</details>
+
+
+<details>
+<summary>Carthage</summary>
+</br>
+<p>To integrate OML10n into your Xcode project using <a href="https://github.com/Carthage/Carthage">Carthage</a>, specify it in your <code>Cartfile</code>:</p>
+
+<pre><code class="ogdl language-ogdl">github "OnMap/L10n-iOS" ~&gt; 1.0
+</code></pre>
+</details>
+
+<details>
+<summary>Swift Package Manager</summary>
+</br>
+<p>You can use <a href="https://swift.org/package-manager">The Swift Package Manager</a> to install <code>OML10n</code> by adding the proper description to your <code>Package.swift</code> file:</p>
+
+<pre><code class="swift language-swift">import PackageDescription
+
+let package = Package(
+    name: "YOUR_PROJECT_NAME",
+    targets: [],
+    dependencies: [
+        .Package(url: "https://github.com/OnMap/L10n-iOS.git", majorVersion: 1),
+    ]
+)
+</code></pre>
+
+<p>Note that the <a href="https://swift.org/package-manager">Swift Package Manager</a> is still in early design and development, for more information checkout its <a href="https://github.com/apple/swift-package-manager">GitHub Page</a></p>
+</details>
+
+<details>
+<summary>Manually</summary>
+</br>
+<p>Add the <a href="https://github.com/OnMap/L10n/tree/master/Source/">extensions</a> folder to your Xcode project to use all extensions, or a specific extension.</p>
+</details>
