@@ -200,10 +200,9 @@ public class LiveUpdates {
         guard let object = localizedObjects[localizedElement.key] else {
             print("""
                 An element with key \(localizedElement.key) and text \(text) exists,
-                but there is no such view in the view hierarchy:
+                but there is no such view in the view hierarchy.
                 """
             )
-            localizedObjects.forEach { print($0) }
             return
         }
 
