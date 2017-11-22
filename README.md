@@ -43,25 +43,6 @@
 </details>
 
 <details>
-<summary>Swift Package Manager</summary>
-</br>
-<p>You can use <a href="https://swift.org/package-manager">The Swift Package Manager</a> to install <code>OML10n</code> by adding the proper description to your <code>Package.swift</code> file:</p>
-
-<pre><code class="swift language-swift">import PackageDescription
-
-let package = Package(
-    name: "YOUR_PROJECT_NAME",
-    targets: [],
-    dependencies: [
-        .Package(url: "https://github.com/OnMap/L10n-iOS.git", majorVersion: 1),
-    ]
-)
-</code></pre>
-
-<p>Note that the <a href="https://swift.org/package-manager">Swift Package Manager</a> is still in early design and development, for more information checkout its <a href="https://github.com/apple/swift-package-manager">GitHub Page</a></p>
-</details>
-
-<details>
 <summary>Manually</summary>
 </br>
 <p>Add the <a href="https://github.com/OnMap/L10n-iOS/tree/master/Source/">folders</a> to your Xcode project to use all extensions, or a specific folder.</p>
