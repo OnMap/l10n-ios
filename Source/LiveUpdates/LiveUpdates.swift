@@ -197,14 +197,7 @@ public class LiveUpdates {
         let text = localizedElement.text
         let type = localizedElement.key.components(separatedBy: separator).last ?? ""
 
-        guard let object = localizedObjects[localizedElement.key] else {
-            print("""
-                An element with key \(localizedElement.key) and text \(text) exists,
-                but there is no such view in the view hierarchy.
-                """
-            )
-            return
-        }
+        guard let object = localizedObjects[localizedElement.key] else { return }
 
         switch object {
         case let label as UILabel:
