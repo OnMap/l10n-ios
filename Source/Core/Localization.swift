@@ -42,8 +42,7 @@ public class Localization: NSObject {
             } else if let preferredLanguageValue = Bundle.main.preferredLocalizations.first,
                 let preferredLanguage = Language(rawValue: preferredLanguageValue),
                 availableLanguages.contains(preferredLanguage) {
-                // Change back to preferredLanguage for supporting other languages
-                return Constants.defaultLanguage
+                return preferredLanguage
             } else {
                 return Constants.defaultLanguage
             }
