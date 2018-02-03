@@ -56,7 +56,7 @@ public class LiveUpdates {
         // Populate objects that shoud be updated live
         localizedObjects = getLocalizedViews(from: viewController.view)
 
-        // Adding NavigationItem and BarButtonItems because they are not in view hierarchy
+        // Adding NavigationItem, BarButtonItems and TabBarItem because they are not in view hierarchy
         let navigationItem = viewController.navigationItem
         if let key = navigationItem.localizationKey {
             localizedObjects[key] = navigationItem
@@ -130,22 +130,6 @@ public class LiveUpdates {
             view is UISegmentedControl {
 
             switch view {
-            case let label as UILabel:
-                if let key = label.localizationKey {
-                    views[key] = label
-                }
-            case let textView as UITextView:
-                if let key = textView.localizationKey {
-                    views[key] = textView
-                }
-            case let textField as UITextField:
-                if let key = textField.localizationKey {
-                    views[key] = textField
-                    let properties: [TextFieldLocalizedProperty] = [.text, .placeholder]
-                    properties.forEach {
-                        views[key + textField.separator + $0.description] = view
-                    }
-                }
             case let button as UIButton:
                 if let key = button.localizationKey {
                     views[key] = button
@@ -154,9 +138,23 @@ public class LiveUpdates {
                         views[key + button.separator + $0.description] = view
                     }
                 }
+            case let label as UILabel:
+                if let key = label.localizationKey {
+                    views[key] = label
+                }
+            case let textField as UITextField:
+                if let key = textField.localizationKey {
+                    let properties: [TextFieldLocalizedProperty] = [.text, .placeholder]
+                    properties.forEach {
+                        views[key + textField.separator + $0.description] = view
+                    }
+                }
+            case let textView as UITextView:
+                if let key = textView.localizationKey {
+                    views[key] = textView
+                }
             case let searchBar as UISearchBar:
                 if let key = searchBar.localizationKey {
-                    views[key] = searchBar
                     let properties: [SearchBarLocalizedProperty] = [.text, .placeholder, .prompt]
                     properties.forEach {
                         views[key + searchBar.separator + $0.description] = view
@@ -164,7 +162,6 @@ public class LiveUpdates {
                 }
             case let segmentedControl as UISegmentedControl:
                 if let key = segmentedControl.localizationKey {
-                    views[key] = segmentedControl
                     (0..<segmentedControl.numberOfSegments).forEach { index in
                         views[key + segmentedControl.separator + String(index)] = segmentedControl
                     }
@@ -205,79 +202,18 @@ public class LiveUpdates {
 
     private func updateLocalizedObject(with localizedElement: LocalizedElement) {
         let text = localizedElement.text
+        let key = localizedElement.key
 
-        guard let object = localizedObjects[localizedElement.key] else { return }
+        guard let object = localizedObjects[key] else { return }
+
+        let separator = (object as? Localizable)?.separator ?? "."
+        let property = key.components(separatedBy: separator).last ?? ""
 
         switch object {
-        case let label as UILabel:
-            if let mutableAttributedText = label.attributedText?.mutableCopy() as? NSMutableAttributedString {
-                mutableAttributedText.mutableString.setString(text)
-                label.attributedText = mutableAttributedText as NSAttributedString
-            } else {
-                label.text = text
-            }
-        case let navigationItem as UINavigationItem:
-            let type = localizedElement.key.components(separatedBy: navigationItem.separator).last ?? ""
-            switch type {
-            case NavigationItemLocalizedProperty.title.description:
-                navigationItem.title = text
-            case NavigationItemLocalizedProperty.prompt.description:
-                navigationItem.prompt = text
-            case NavigationItemLocalizedProperty.backButtonTitle.description:
-                navigationItem.backBarButtonItem?.title = text
-            default:
-                navigationItem.title = text
-            }
-        case let barButtonItem as UIBarButtonItem:
-            barButtonItem.title = text
-        case let tabBarItem as UITabBarItem:
-            let type = localizedElement.key.components(separatedBy: tabBarItem.separator).last ?? ""
-            switch type {
-            case TabBarItemLocalizedProperty.title.description:
-                tabBarItem.title = text
-            case TabBarItemLocalizedProperty.badgeValue.description:
-                tabBarItem.badgeValue = text
-            default:
-                tabBarItem.title = text
-            }
-        case let textView as UITextView:
-            if let mutableAttributedText = textView.attributedText?.mutableCopy() as? NSMutableAttributedString {
-                mutableAttributedText.mutableString.setString(text)
-                textView.attributedText = mutableAttributedText as NSAttributedString
-            } else {
-                textView.text = text
-            }
-        case let textField as UITextField:
-            let type = localizedElement.key.components(separatedBy: textField.separator).last ?? ""
-            switch type {
-            case TextFieldLocalizedProperty.text.description:
-                if let mutableAttributedText = textField.attributedText?.mutableCopy() as? NSMutableAttributedString {
-                    mutableAttributedText.mutableString.setString(text)
-                    textField.attributedText = mutableAttributedText as NSAttributedString
-                } else {
-                    textField.text = text
-                }
-            case TextFieldLocalizedProperty.placeholder.description:
-                textField.placeholder = text
-            default:
-                textField.placeholder = text
-            }
-        case let searchBar as UISearchBar:
-            let type = localizedElement.key.components(separatedBy: searchBar.separator).last ?? ""
-            switch type {
-            case SearchBarLocalizedProperty.text.description:
-                searchBar.text = text
-            case SearchBarLocalizedProperty.placeholder.description:
-                searchBar.placeholder = text
-            case SearchBarLocalizedProperty.prompt.description:
-                searchBar.prompt = text
-            default:
-                searchBar.placeholder = text
-            }
         case let button as UIButton:
-            let type = localizedElement.key.components(separatedBy: button.separator).last ?? ""
             let state: UIControlState
-            switch type {
+
+            switch property {
             case ButtonLocalizedProperty.normal.description:
                 state = .normal
             case ButtonLocalizedProperty.highlighted.description:
@@ -297,11 +233,91 @@ public class LiveUpdates {
             } else {
                 button.setTitle(text, for: state)
             }
+        case let label as UILabel:
+            if let mutableAttributedText = label.attributedText?.mutableCopy() as? NSMutableAttributedString {
+                mutableAttributedText.mutableString.setString(text)
+                label.attributedText = mutableAttributedText as NSAttributedString
+            } else {
+                label.text = text
+            }
+        case let textField as UITextField:
+            switch property {
+            case TextFieldLocalizedProperty.text.description:
+                if let mutableAttributedText = textField.attributedText?.mutableCopy() as? NSMutableAttributedString {
+                    mutableAttributedText.mutableString.setString(text)
+                    textField.attributedText = mutableAttributedText as NSAttributedString
+                } else {
+                    textField.text = text
+                }
+            case TextFieldLocalizedProperty.placeholder.description:
+                textField.placeholder = text
+            default:
+                #if DEBUG
+                    print("UITextField key should contain property" +
+                        " (e.g. " + key + separator + TextFieldLocalizedProperty.text.description +
+                        "/" + separator + TextFieldLocalizedProperty.placeholder.description + ")"
+                    )
+                #endif
+            }
+        case let textView as UITextView:
+            if let mutableAttributedText = textView.attributedText?.mutableCopy() as? NSMutableAttributedString {
+                mutableAttributedText.mutableString.setString(text)
+                textView.attributedText = mutableAttributedText as NSAttributedString
+            } else {
+                textView.text = text
+            }
+        case let searchBar as UISearchBar:
+            switch property {
+            case SearchBarLocalizedProperty.text.description:
+                searchBar.text = text
+            case SearchBarLocalizedProperty.placeholder.description:
+                searchBar.placeholder = text
+            case SearchBarLocalizedProperty.prompt.description:
+                searchBar.prompt = text
+            default:
+                #if DEBUG
+                    print("UISearchBar key should contain property" +
+                        " (e.g. " + key + separator + SearchBarLocalizedProperty.text.description +
+                        "/" + separator + SearchBarLocalizedProperty.placeholder.description +
+                        "/" + separator + SearchBarLocalizedProperty.prompt.description + ")"
+                    )
+                #endif
+            }
         case let segmentedControl as UISegmentedControl:
-            let type = localizedElement.key.components(separatedBy: segmentedControl.separator).last ?? ""
-            segmentedControl.setTitle(text, forSegmentAt: Int(type) ?? 0)
+            if let index = Int(property) {
+                segmentedControl.setTitle(text, forSegmentAt: index)
+            } else {
+                #if DEBUG
+                    print("UISegmentedControl key should contain index of a segment" +
+                        " (e.g. " + key + separator + "0)")
+                #endif
+            }
+        case let navigationItem as UINavigationItem:
+            switch property {
+            case NavigationItemLocalizedProperty.title.description:
+                navigationItem.title = text
+            case NavigationItemLocalizedProperty.prompt.description:
+                navigationItem.prompt = text
+            case NavigationItemLocalizedProperty.backButtonTitle.description:
+                navigationItem.backBarButtonItem?.title = text
+            default:
+                navigationItem.title = text
+            }
+        case let barButtonItem as UIBarButtonItem:
+            barButtonItem.title = text
+        case let tabBarItem as UITabBarItem:
+            switch property {
+            case TabBarItemLocalizedProperty.title.description:
+                tabBarItem.title = text
+            case TabBarItemLocalizedProperty.badgeValue.description:
+                tabBarItem.badgeValue = text
+            default:
+                tabBarItem.title = text
+            }
         default:
-            print("Object \(object) has unsupported type")
+            #if DEBUG
+                print("Object \(object) has unsupported type")
+            #endif
         }
     }
 }
