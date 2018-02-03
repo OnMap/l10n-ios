@@ -12,22 +12,6 @@ private var runtimeLocalizationKey: UInt8 = 0
 
 let separator = "."
 
-enum TextFieldLocalizedProperty: String {
-    case text, placeholder
-}
-
-enum ButtonLocalizedProperty: String {
-    case normal, highlighted, selected, disabled
-}
-
-enum NavigationItemLocalizedProperty: String {
-    case title, prompt, backButtonTitle
-}
-
-enum SearchBarLocalizedProperty: String {
-    case text, placeholder, prompt
-}
-
 extension UIButton {
 
     @IBInspectable
@@ -231,27 +215,25 @@ extension UIBarButtonItem {
     }
 }
 
-// LocalizedProperty extension
+// MARK: LocalizedProperties
 
-extension TextFieldLocalizedProperty: CustomStringConvertible {
-    var description: String {
-        return rawValue.capitalized
-    }
+enum TextFieldLocalizedProperty: String, CustomStringConvertible {
+    case text, placeholder
 }
 
-extension SearchBarLocalizedProperty: CustomStringConvertible {
-    var description: String {
-        return rawValue.capitalized
-    }
+enum ButtonLocalizedProperty: String, CustomStringConvertible {
+    case normal, highlighted, selected, disabled
 }
 
-extension ButtonLocalizedProperty: CustomStringConvertible {
-    var description: String {
-        return rawValue.capitalized
-    }
+enum NavigationItemLocalizedProperty: String, CustomStringConvertible {
+    case title, prompt, backButtonTitle
 }
 
-extension NavigationItemLocalizedProperty: CustomStringConvertible {
+enum SearchBarLocalizedProperty: String, CustomStringConvertible {
+    case text, placeholder, prompt
+}
+
+extension CustomStringConvertible where Self: RawRepresentable, Self.RawValue == String {
     var description: String {
         return rawValue.capitalized
     }
