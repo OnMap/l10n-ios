@@ -15,3 +15,6 @@ target 'Example' do
   pod 'OML10n', :path => '.'
 
 end
+
+target 'OML10nTests' do
+end
