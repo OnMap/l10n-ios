@@ -20,6 +20,7 @@
 		ABEDDE5B202654F600D5D4DF /* UISegmentedControl+LocalizableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDDE5A202654F600D5D4DF /* UISegmentedControl+LocalizableTests.swift */; };
 		ABEDDE5D20265AAD00D5D4DF /* UINavigationItem+LocalizableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDDE5C20265AAD00D5D4DF /* UINavigationItem+LocalizableTests.swift */; };
 		ABEDDE5F20265AEB00D5D4DF /* UIBarButtonItem+LocalizableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDDE5E20265AEB00D5D4DF /* UIBarButtonItem+LocalizableTests.swift */; };
+		ABEDDE61202661DF00D5D4DF /* UITabBarItem+LocalizableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDDE60202661DF00D5D4DF /* UITabBarItem+LocalizableTests.swift */; };
 		C77A0BC61FBF27BE00DC4E8C /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BB81FBF27BE00DC4E8C /* Localization.swift */; };
 		C77A0BC71FBF27BE00DC4E8C /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BB91FBF27BE00DC4E8C /* Localizable.swift */; };
 		C77A0BCA1FBF27BE00DC4E8C /* LiveUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BBF1FBF27BE00DC4E8C /* LiveUpdates.swift */; };
@@ -58,6 +59,7 @@
 		ABEDDE5A202654F600D5D4DF /* UISegmentedControl+LocalizableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+LocalizableTests.swift"; sourceTree = "<group>"; };
 		ABEDDE5C20265AAD00D5D4DF /* UINavigationItem+LocalizableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+LocalizableTests.swift"; sourceTree = "<group>"; };
 		ABEDDE5E20265AEB00D5D4DF /* UIBarButtonItem+LocalizableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+LocalizableTests.swift"; sourceTree = "<group>"; };
+		ABEDDE60202661DF00D5D4DF /* UITabBarItem+LocalizableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+LocalizableTests.swift"; sourceTree = "<group>"; };
 		C77A0BA91FBF24FA00DC4E8C /* OML10n.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OML10n.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77A0BB81FBF27BE00DC4E8C /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		C77A0BB91FBF27BE00DC4E8C /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				ABEDDE5A202654F600D5D4DF /* UISegmentedControl+LocalizableTests.swift */,
 				ABEDDE5C20265AAD00D5D4DF /* UINavigationItem+LocalizableTests.swift */,
 				ABEDDE5E20265AEB00D5D4DF /* UIBarButtonItem+LocalizableTests.swift */,
+				ABEDDE60202661DF00D5D4DF /* UITabBarItem+LocalizableTests.swift */,
 				ABEDDE4C2026328F00D5D4DF /* Localizable.strings */,
 			);
 			path = Core;
@@ -466,6 +469,7 @@
 				ABEDDE5F20265AEB00D5D4DF /* UIBarButtonItem+LocalizableTests.swift in Sources */,
 				ABEDDE532026328F00D5D4DF /* LocalizedTests.swift in Sources */,
 				ABEDDE5D20265AAD00D5D4DF /* UINavigationItem+LocalizableTests.swift in Sources */,
+				ABEDDE61202661DF00D5D4DF /* UITabBarItem+LocalizableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

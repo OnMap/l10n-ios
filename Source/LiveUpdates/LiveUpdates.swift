@@ -75,6 +75,15 @@ public class LiveUpdates {
             }
         }
 
+        let tabBarItem = viewController.tabBarItem
+        if let item = tabBarItem, let key = item.localizationKey {
+            localizedObjects[key] = tabBarItem
+            let properties: [TabBarItemLocalizedProperty] = [.title, .badgeValue]
+            properties.forEach {
+                localizedObjects[key + item.separator + $0.description] = tabBarItem
+            }
+        }
+
         // Start observing changes
         configureObservingChanges()
     }
@@ -221,6 +230,16 @@ public class LiveUpdates {
             }
         case let barButtonItem as UIBarButtonItem:
             barButtonItem.title = text
+        case let tabBarItem as UITabBarItem:
+            let type = localizedElement.key.components(separatedBy: tabBarItem.separator).last ?? ""
+            switch type {
+            case TabBarItemLocalizedProperty.title.description:
+                tabBarItem.title = text
+            case TabBarItemLocalizedProperty.badgeValue.description:
+                tabBarItem.badgeValue = text
+            default:
+                tabBarItem.title = text
+            }
         case let textView as UITextView:
             if let mutableAttributedText = textView.attributedText?.mutableCopy() as? NSMutableAttributedString {
                 mutableAttributedText.mutableString.setString(text)

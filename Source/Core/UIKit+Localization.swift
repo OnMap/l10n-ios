@@ -250,6 +250,32 @@ extension UIBarButtonItem: Localizable {
     }
 }
 
+extension UITabBarItem: Localizable {
+
+    @IBInspectable
+    public var localizationKey: String? {
+        get {
+            return objc_getAssociatedObject(self, &runtimeLocalizationKey) as? String
+        }
+        set {
+            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+            guard let key = newValue, !key.isEmpty else { return }
+
+            let titleKey = key + separator + TabBarItemLocalizedProperty.title.description
+
+            if let title = localized(titleKey, bundle: bundle) {
+                self.title = title
+            } else {
+                // Make possible to not specify "*.Title" in Localizable.strings for setting .title
+                self.title = localized(key, bundle: bundle) ?? key
+            }
+
+            let badgeValueKey = key + separator + TabBarItemLocalizedProperty.badgeValue.description
+            badgeValue = localized(badgeValueKey, bundle: bundle)
+        }
+    }
+}
+
 // MARK: LocalizedProperties
 
 enum TextFieldLocalizedProperty: String, CustomStringConvertible {
@@ -266,6 +292,10 @@ enum NavigationItemLocalizedProperty: String, CustomStringConvertible {
 
 enum SearchBarLocalizedProperty: String, CustomStringConvertible {
     case text, placeholder, prompt
+}
+
+enum TabBarItemLocalizedProperty: String, CustomStringConvertible {
+    case title, badgeValue
 }
 
 extension CustomStringConvertible where Self: RawRepresentable, Self.RawValue == String {
