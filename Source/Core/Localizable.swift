@@ -11,20 +11,22 @@ import Foundation
 /**
  Returns localized text for given key or key if text doesn't exists or is empty
  */
-public func localized(_ key: String) -> String {
-    let localizedString = Bundle.main.localizedString(forKey: key, value: key, table: nil)
+public func localized(_ key: String, bundle: Bundle = Bundle.main) -> String? {
+    let localizedString = bundle.localizedString(forKey: key, value: key, table: nil)
     guard localizedString != key && !localizedString.isEmpty else {
-        print("There is no localized text for key: \(key)")
-        return key
+        #if DEBUG
+            print("There is no localized text for key: \(key)")
+        #endif
+        return nil
     }
-    return Bundle.main.localizedString(forKey: key, value: key, table: nil)
+    return localizedString
 }
 
 /**
  Returns localized text for given key in plural form with given count as args
  */
 public func localized(_ key: String, args: [CVarArg]) -> String {
-    let format = localized(key)
+    let format = localized(key) ?? key
     return withVaList(args) { arguments -> String in
         return NSString(format: format, locale: Localization.currentLocale, arguments: arguments) as String
     }
