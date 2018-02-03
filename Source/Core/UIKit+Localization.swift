@@ -194,7 +194,7 @@ extension UISegmentedControl: Localizable {
 
             (0..<numberOfSegments).forEach { index in
                 let titleKey = key + separator + String(index)
-                let title = localized(titleKey, bundle: bundle)
+                let title = localized(titleKey, bundle: bundle) ?? titleKey
                 setTitle(title, forSegmentAt: index)
             }
         }
@@ -270,6 +270,12 @@ enum SearchBarLocalizedProperty: String, CustomStringConvertible {
 
 extension CustomStringConvertible where Self: RawRepresentable, Self.RawValue == String {
     var description: String {
-        return rawValue.capitalized
+        return rawValue.capitalizingFirstLetter
+    }
+}
+
+extension String {
+    var capitalizingFirstLetter: String {
+        return prefix(1).uppercased() + dropFirst()
     }
 }

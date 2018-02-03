@@ -1,0 +1,35 @@
+/*
+  Localizable.strings
+  OML10nTests
+
+  Created by Alex Alexandrovych on 16/08/2017.
+  Copyright © 2018 Alex Alexandrovych. All rights reserved.
+*/
+
+"Test" = "test";
+
+"Test.Button" = "test button normal";
+"Test.Button.Highlighted" = "test button highlighted";
+"Test.Button.Selected" = "test button selected";
+"Test.Button.Disabled" = "test button disabled";
+
+"Test.Label" = "test label text";
+
+"Test.TextField.Text" = "test text field text";
+"Test.TextField.Placeholder" = "test text field placeholder";
+
+"Test.TextView" = "test text view text";
+
+
+"Test.SearchBar.Text" = "test search bar text";
+"Test.SearchBar.Placeholder" = "test search bar placeholder";
+"Test.SearchBar.Prompt" = "test search bar prompt";
+
+"Test.SegmentedControl.0" = "test segmented control first title";
+"Test.SegmentedControl.1" = "test segmented control second title";
+
+"Test.NavigationItem" = "test navigation item title";
+"Test.NavigationItem.Prompt" = "test navigation item prompt";
+"Test.NavigationItem.BackButtonTitle" = "test navigation item back button title";
+
+"Test.BarButtonItem" = "test bar button item text";
