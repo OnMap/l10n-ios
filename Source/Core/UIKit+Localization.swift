@@ -12,7 +12,11 @@ private var runtimeLocalizationKey: UInt8 = 0
 
 let separator = "."
 
-extension UIButton {
+public protocol Localizable {
+    var localizationKey: String? { get set }
+}
+
+extension UIButton: Localizable {
 
     @IBInspectable
     public var localizationKey: String? {
@@ -20,8 +24,8 @@ extension UIButton {
             return objc_getAssociatedObject(self, &runtimeLocalizationKey) as? String
         }
         set {
-            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-            guard let newValue = newValue, !newValue.isEmpty else { return }
+            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+            guard let key = newValue, !key.isEmpty else { return }
 
             let properties: [(ButtonLocalizedProperty, UIControlState)] = [
                 (.normal, .normal),
@@ -29,28 +33,32 @@ extension UIButton {
                 (.highlighted, .highlighted),
                 (.disabled, .disabled)
             ]
-            properties.forEach { property, state in
-                let key = newValue + separator + property.description
-                var text = localized(key)
 
-                if text == nil && state == .normal {
-                    text = key
+            properties.forEach { property, state in
+                let propertyKey = key + separator + property.description
+                var newTitle = localized(propertyKey)
+
+                // Make possible to not specify "*.Normal" in Localizable.strings
+                // for setting title with .normal state.
+                // If not found set key as a title
+                if newTitle == nil && state == .normal {
+                    newTitle = localized(key) ?? key
                 }
 
                 if let mutableAttributedText = attributedTitle(for: state)?.mutableCopy() as? NSMutableAttributedString,
-                    let text = text {
-                    mutableAttributedText.mutableString.setString(text)
+                    let title = newTitle {
+                    mutableAttributedText.mutableString.setString(title)
                     let attributedText = mutableAttributedText as NSAttributedString
                     setAttributedTitle(attributedText, for: state)
                 } else {
-                    setTitle(text, for: state)
+                    setTitle(newTitle, for: state)
                 }
             }
         }
     }
 }
 
-extension UILabel {
+extension UILabel: Localizable {
 
     @IBInspectable
     public var localizationKey: String? {
@@ -58,10 +66,10 @@ extension UILabel {
             return objc_getAssociatedObject(self, &runtimeLocalizationKey) as? String
         }
         set {
-            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-            guard let newValue = newValue, !newValue.isEmpty else { return }
+            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+            guard let key = newValue, !key.isEmpty else { return }
 
-            let text = localized(newValue) ?? newValue
+            let text = localized(key) ?? key
 
             if let mutableAttributedText = attributedText?.mutableCopy() as? NSMutableAttributedString {
                 mutableAttributedText.mutableString.setString(text)
@@ -73,7 +81,7 @@ extension UILabel {
     }
 }
 
-extension UITextField {
+extension UITextField: Localizable {
 
     @IBInspectable
     public var localizationKey: String? {
@@ -81,10 +89,10 @@ extension UITextField {
             return objc_getAssociatedObject(self, &runtimeLocalizationKey) as? String
         }
         set {
-            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-            guard let newValue = newValue, !newValue.isEmpty else { return }
+            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+            guard let key = newValue, !key.isEmpty else { return }
 
-            let textKey = newValue + separator + TextFieldLocalizedProperty.text.description
+            let textKey = key + separator + TextFieldLocalizedProperty.text.description
 
             if let text = localized(textKey) {
                 if let mutableAttributedText = attributedText?.mutableCopy() as? NSMutableAttributedString {
@@ -95,7 +103,7 @@ extension UITextField {
                 }
             }
 
-            let placeholderKey = newValue + separator + TextFieldLocalizedProperty.placeholder.description
+            let placeholderKey = key + separator + TextFieldLocalizedProperty.placeholder.description
 
             if let placeholder = localized(placeholderKey) {
                 self.placeholder = placeholder
@@ -104,7 +112,7 @@ extension UITextField {
     }
 }
 
-extension UITextView {
+extension UITextView: Localizable {
 
     @IBInspectable
     public var localizationKey: String? {
@@ -112,10 +120,10 @@ extension UITextView {
             return objc_getAssociatedObject(self, &runtimeLocalizationKey) as? String
         }
         set {
-            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-            guard let newValue = newValue, !newValue.isEmpty else { return }
+            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+            guard let key = newValue, !key.isEmpty else { return }
 
-            if let text = localized(newValue) {
+            if let text = localized(key) {
                 if let mutableAttributedText = attributedText?.mutableCopy() as? NSMutableAttributedString {
                     mutableAttributedText.mutableString.setString(text)
                     attributedText = mutableAttributedText as NSAttributedString
@@ -127,7 +135,7 @@ extension UITextView {
     }
 }
 
-extension UISearchBar {
+extension UISearchBar: Localizable {
 
     @IBInspectable
     public var localizationKey: String? {
@@ -135,20 +143,20 @@ extension UISearchBar {
             return objc_getAssociatedObject(self, &runtimeLocalizationKey) as? String
         }
         set {
-            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-            guard let newValue = newValue, !newValue.isEmpty else { return }
+            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+            guard let key = newValue, !key.isEmpty else { return }
 
-            let textKey = newValue + separator + SearchBarLocalizedProperty.text.description
+            let textKey = key + separator + SearchBarLocalizedProperty.text.description
             if let text = localized(textKey) {
                 self.text = text
             }
 
-            let placeholderKey = newValue + separator + SearchBarLocalizedProperty.placeholder.description
+            let placeholderKey = key + separator + SearchBarLocalizedProperty.placeholder.description
             if let placeholder = localized(placeholderKey) {
                 self.placeholder = placeholder
             }
 
-            let promptKey = newValue + separator + SearchBarLocalizedProperty.prompt.description
+            let promptKey = key + separator + SearchBarLocalizedProperty.prompt.description
             if let prompt = localized(promptKey) {
                 self.prompt = prompt
             }
@@ -156,7 +164,7 @@ extension UISearchBar {
     }
 }
 
-extension UISegmentedControl {
+extension UISegmentedControl: Localizable {
 
     @IBInspectable
     public var localizationKey: String? {
@@ -164,18 +172,19 @@ extension UISegmentedControl {
             return objc_getAssociatedObject(self, &runtimeLocalizationKey) as? String
         }
         set {
-            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-            guard let newValue = newValue, !newValue.isEmpty else { return }
+            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+            guard let key = newValue, !key.isEmpty else { return }
 
             (0..<numberOfSegments).forEach { index in
-                let title = localized(newValue + separator + String(index))
+                let titleKey = key + separator + String(index)
+                let title = localized(titleKey)
                 setTitle(title, forSegmentAt: index)
             }
         }
     }
 }
 
-extension UINavigationItem {
+extension UINavigationItem: Localizable {
 
     @IBInspectable
     public var localizationKey: String? {
@@ -183,17 +192,24 @@ extension UINavigationItem {
             return objc_getAssociatedObject(self, &runtimeLocalizationKey) as? String
         }
         set {
-            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-            guard let newValue = newValue, !newValue.isEmpty else { return }
+            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+            guard let key = newValue, !key.isEmpty else { return }
 
-            title = localized(newValue + separator + NavigationItemLocalizedProperty.title.description) ?? newValue
+            let titleKey = key + separator + NavigationItemLocalizedProperty.title.description
 
-            let promptKey = newValue + separator + NavigationItemLocalizedProperty.prompt.description
+            if let title = localized(titleKey) {
+                self.title = title
+            } else {
+                // Make possible to not specify "*.Title" in Localizable.strings for setting .title
+                self.title = localized(key) ?? key
+            }
+
+            let promptKey = key + separator + NavigationItemLocalizedProperty.prompt.description
             if let prompt = localized(promptKey) {
                 self.prompt = prompt
             }
 
-            let backButtonTitleKey = newValue + separator + NavigationItemLocalizedProperty.backButtonTitle.description
+            let backButtonTitleKey = key + separator + NavigationItemLocalizedProperty.backButtonTitle.description
             if let backButtonTitle = localized(backButtonTitleKey) {
                 backBarButtonItem?.title = backButtonTitle
             }
@@ -201,7 +217,7 @@ extension UINavigationItem {
     }
 }
 
-extension UIBarButtonItem {
+extension UIBarButtonItem: Localizable {
 
     @IBInspectable
     public var localizationKey: String? {
@@ -209,9 +225,10 @@ extension UIBarButtonItem {
             return objc_getAssociatedObject(self, &runtimeLocalizationKey) as? String
         }
         set {
-            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-            guard let newValue = newValue, !newValue.isEmpty else { return }
-            title = localized(newValue) ?? newValue
+            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+            guard let key = newValue, !key.isEmpty else { return }
+
+            title = localized(key) ?? key
         }
     }
 }
