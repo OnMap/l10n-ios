@@ -33,3 +33,6 @@
 "Test.NavigationItem.BackButtonTitle" = "test navigation item back button title";
 
 "Test.BarButtonItem" = "test bar button item text";
+
+"Test.TabBarItem" = "test tab bar item title";
+"Test.TabBarItem.BadgeValue" = "test tab bar item badge value";
