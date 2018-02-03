@@ -62,9 +62,10 @@ public class LiveUpdates {
             localizedObjects[key] = navigationItem
             let properties: [NavigationItemLocalizedProperty] = [.title, .prompt, .backButtonTitle]
             properties.forEach {
-                localizedObjects[key + separator + $0.description] = navigationItem
+                localizedObjects[key + navigationItem.separator + $0.description] = navigationItem
             }
         }
+
         let barButtonItems = [navigationItem.leftBarButtonItems ?? [], navigationItem.rightBarButtonItems ?? []]
         barButtonItems.forEach { buttons in
             buttons.forEach { button in
@@ -133,7 +134,7 @@ public class LiveUpdates {
                     views[key] = textField
                     let properties: [TextFieldLocalizedProperty] = [.text, .placeholder]
                     properties.forEach {
-                        views[key + separator + $0.description] = view
+                        views[key + textField.separator + $0.description] = view
                     }
                 }
             case let button as UIButton:
@@ -141,7 +142,7 @@ public class LiveUpdates {
                     views[key] = button
                     let properties: [ButtonLocalizedProperty] = [.normal, .selected, .highlighted, .disabled]
                     properties.forEach {
-                        views[key + separator + $0.description] = view
+                        views[key + button.separator + $0.description] = view
                     }
                 }
             case let searchBar as UISearchBar:
@@ -149,14 +150,14 @@ public class LiveUpdates {
                     views[key] = searchBar
                     let properties: [SearchBarLocalizedProperty] = [.text, .placeholder, .prompt]
                     properties.forEach {
-                        views[key + separator + $0.description] = view
+                        views[key + searchBar.separator + $0.description] = view
                     }
                 }
             case let segmentedControl as UISegmentedControl:
                 if let key = segmentedControl.localizationKey {
                     views[key] = segmentedControl
                     (0..<segmentedControl.numberOfSegments).forEach { index in
-                        views[key + separator + String(index)] = segmentedControl
+                        views[key + segmentedControl.separator + String(index)] = segmentedControl
                     }
                 }
             default:
@@ -195,7 +196,6 @@ public class LiveUpdates {
 
     private func updateLocalizedObject(with localizedElement: LocalizedElement) {
         let text = localizedElement.text
-        let type = localizedElement.key.components(separatedBy: separator).last ?? ""
 
         guard let object = localizedObjects[localizedElement.key] else { return }
 
@@ -208,6 +208,7 @@ public class LiveUpdates {
                 label.text = text
             }
         case let navigationItem as UINavigationItem:
+            let type = localizedElement.key.components(separatedBy: navigationItem.separator).last ?? ""
             switch type {
             case NavigationItemLocalizedProperty.title.description:
                 navigationItem.title = text
@@ -228,6 +229,7 @@ public class LiveUpdates {
                 textView.text = text
             }
         case let textField as UITextField:
+            let type = localizedElement.key.components(separatedBy: textField.separator).last ?? ""
             switch type {
             case TextFieldLocalizedProperty.text.description:
                 if let mutableAttributedText = textField.attributedText?.mutableCopy() as? NSMutableAttributedString {
@@ -242,6 +244,7 @@ public class LiveUpdates {
                 textField.placeholder = text
             }
         case let searchBar as UISearchBar:
+            let type = localizedElement.key.components(separatedBy: searchBar.separator).last ?? ""
             switch type {
             case SearchBarLocalizedProperty.text.description:
                 searchBar.text = text
@@ -253,6 +256,7 @@ public class LiveUpdates {
                 searchBar.placeholder = text
             }
         case let button as UIButton:
+            let type = localizedElement.key.components(separatedBy: button.separator).last ?? ""
             let state: UIControlState
             switch type {
             case ButtonLocalizedProperty.normal.description:
@@ -275,6 +279,7 @@ public class LiveUpdates {
                 button.setTitle(text, for: state)
             }
         case let segmentedControl as UISegmentedControl:
+            let type = localizedElement.key.components(separatedBy: segmentedControl.separator).last ?? ""
             segmentedControl.setTitle(text, forSegmentAt: Int(type) ?? 0)
         default:
             print("Object \(object) has unsupported type")
