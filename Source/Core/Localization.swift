@@ -14,11 +14,9 @@ public class Localization: NSObject {
         static let userLanguageSavedKey = "UserLanguageSavedKey"
     }
 
-    private static var defaultLanguage: String!
     private static var usePreferredLanguage: Bool!
 
-    public static func setup(defaultLanguage: String = "en", usePreferredLanguage: Bool = true) {
-        Localization.defaultLanguage = defaultLanguage
+    public static func setup(usePreferredLanguage: Bool = true) {
         Localization.usePreferredLanguage = usePreferredLanguage
         Bundle.update(language: currentLanguage)
     }
@@ -41,7 +39,7 @@ public class Localization: NSObject {
                 availableLanguages.contains(preferredLanguage) {
                 return preferredLanguage
             } else {
-                return defaultLanguage
+                return "Base"
             }
         }
         set {
