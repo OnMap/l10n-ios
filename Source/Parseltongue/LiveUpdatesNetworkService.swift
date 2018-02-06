@@ -12,51 +12,84 @@ import SocketIO
 
 typealias JSONDictionary = [String: Any]
 
+enum LiveUpdatesNetworkServiceError: Error {
+    case data(reason: String)
+    case parsing(reason: String)
+    case api(reason: String)
+    case dataBase(reason: String)
+}
+
+extension LiveUpdatesNetworkServiceError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .data(let reason),
+             .parsing(let reason),
+             .api(let reason),
+             .dataBase(let reason):
+            return reason
+        }
+    }
+}
+
 public class LiveUpdatesNetworkService {
 
     private static var appId: String!
 
     // MARK: - Public
 
-    public static func setup(appId: String) {
+    public static func setup(appId: String, clearRun: Bool = true) {
         LiveUpdatesNetworkService.appId = appId
-        deleteExistingRealms()
-        fetchAndParseAllLocalizedTexts()
+        if clearRun {
+            deleteExistingRealms()
+        }
+        fetchAndParseAllLocalizedTexts { error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
         configureLiveUpdating()
     }
 
     // MARK: - Private
 
     private static func deleteExistingRealms() {
-        [RealmConfig.english, RealmConfig.hebrew, RealmConfig.russian].forEach { $0.delete() }
+        Localization.availableLanguages.forEach { Realm.delete(language: $0) }
     }
 
-    private static func fetchAndParseAllLocalizedTexts() {
+    private static func fetchAndParseAllLocalizedTexts(completion: @escaping (Error?) -> Void) {
         let urlRequest = ParseltongueRouter.getTranslations(appId).asURLRequest()
         let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if let error = error {
-                print(error.localizedDescription)
+                completion(error)
                 return
             }
             guard let data = data else {
-                print("There is no data in response")
+                completion(LiveUpdatesNetworkServiceError.data(reason: "There is no data in response"))
                 return
             }
             do {
                 let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
                 guard let jsonDictionary = jsonObject as? JSONDictionary else {
-                    print("Returned object is not a json dictionary:\n\(jsonObject)")
+                    let reason = "Returned object is not a json dictionary:\n\(jsonObject)"
+                    completion(LiveUpdatesNetworkServiceError.parsing(reason: reason))
                     return
                 }
                 if let status = jsonDictionary["status"] as? Int,
                     let name = jsonDictionary["name"] as? String,
                     let message = jsonDictionary["message"] as? String {
-                    print("Error \(status): \(name). \(message)")
+                    let reason = "Error \(status): \(name). \(message)"
+                    completion(LiveUpdatesNetworkServiceError.api(reason: reason))
+                    return
+                }
+                guard !jsonDictionary.isEmpty else {
+                    let reason = "There are no languages in response"
+                    completion(LiveUpdatesNetworkServiceError.parsing(reason: reason))
                     return
                 }
                 try parseJSON(jsonDictionary)
             } catch {
-                print(error.localizedDescription)
+                let reason = error.localizedDescription
+                completion(LiveUpdatesNetworkServiceError.dataBase(reason: reason))
             }
         }
         task.resume()
@@ -85,23 +118,19 @@ public class LiveUpdatesNetworkService {
     }
 
     private static func parseJSON(_ json: JSONDictionary) throws {
-        if let english = json["en"] as? JSONDictionary {
-            try addLocalizedTexts(json: english, into: .english)
-        }
-        if let hebrew = json["he"] as? JSONDictionary {
-            try addLocalizedTexts(json: hebrew, into: .hebrew)
-        }
-        if let russian = json["ru"] as? JSONDictionary {
-            try addLocalizedTexts(json: russian, into: .russian)
+        try json.keys.forEach { key in
+            if let languageDict = json[key] as? JSONDictionary {
+                try addLocalizedTexts(json: languageDict, into: key)
+            }
         }
     }
 
-    private static func addLocalizedTexts(json: JSONDictionary, into realmConfig: RealmConfig) throws {
+    private static func addLocalizedTexts(json: JSONDictionary, into language: String) throws {
         let localizedElements = json.flatMap { key, value -> LocalizedElement? in
             guard let text = value as? String else { return nil }
             return LocalizedElement(key: key, text: text)
         }
-        let realm = try Realm(realmConfig: realmConfig)
+        let realm = try Realm(configuration: Realm.configuration(language: language))
         try realm.write { realm.add(localizedElements, update: true) }
     }
 }

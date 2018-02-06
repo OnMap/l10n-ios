@@ -8,44 +8,36 @@
 
 import UIKit
 
-public enum Language: String {
-    case english = "en"
-    case hebrew = "he"
-    case russian = "ru"
-}
-
 public class Localization: NSObject {
 
     private enum Constants {
         static let userLanguageSavedKey = "UserLanguageSavedKey"
     }
 
-    private static var defaultLanguage: Language!
+    private static var defaultLanguage: String!
     private static var usePreferredLanguage: Bool!
 
-    public static func setup(defaultLanguage: Language = .english, usePreferredLanguage: Bool = true) {
+    public static func setup(defaultLanguage: String = "en", usePreferredLanguage: Bool = true) {
         Localization.defaultLanguage = defaultLanguage
         Localization.usePreferredLanguage = usePreferredLanguage
         Bundle.update(language: currentLanguage)
     }
 
-    public static var availableLanguages: [Language] {
+    public static var availableLanguages: [String] {
         // Don't include "Base" in available languages
-        let localizations = Bundle.main.localizations.filter { $0 != "Base" }
-        return localizations.flatMap { Language(rawValue: $0) }
+        return Bundle.main.localizations.filter { $0 != "Base" }
     }
 
     public static var currentLocale: Locale {
-        return Locale(identifier: currentLanguage.rawValue)
+        return Locale(identifier: currentLanguage)
     }
 
-    public static var currentLanguage: Language {
+    public static var currentLanguage: String {
         get {
-            if let currentLanguage = UserDefaults.standard.object(forKey: Constants.userLanguageSavedKey) as? String {
-                return Language(rawValue: currentLanguage) ?? defaultLanguage
+            if let currentLanguage = UserDefaults.standard.string(forKey: Constants.userLanguageSavedKey) {
+                return currentLanguage
             } else if usePreferredLanguage,
-                let preferredLanguageValue = Bundle.main.preferredLocalizations.first,
-                let preferredLanguage = Language(rawValue: preferredLanguageValue),
+                let preferredLanguage = Bundle.main.preferredLocalizations.first,
                 availableLanguages.contains(preferredLanguage) {
                 return preferredLanguage
             } else {
@@ -53,19 +45,19 @@ public class Localization: NSObject {
             }
         }
         set {
-            UserDefaults.standard.setValue(newValue.rawValue, forKey: Constants.userLanguageSavedKey)
+            UserDefaults.standard.setValue(newValue, forKey: Constants.userLanguageSavedKey)
             UserDefaults.standard.synchronize()
             Bundle.update(language: newValue)
         }
     }
 
     public static var isRTL: Bool {
-        return Locale.characterDirection(forLanguage: currentLanguage.rawValue) == .rightToLeft
+        return Locale.characterDirection(forLanguage: currentLanguage) == .rightToLeft
     }
 
-    public static func displayNameForLanguage(_ language: Language, inLanguge: Language) -> String {
-        let locale = NSLocale(localeIdentifier: inLanguge.rawValue)
-        return locale.displayName(forKey: NSLocale.Key.identifier, value: language.rawValue) ?? ""
+    public static func displayName(for language: String, inLanguge: String? = nil) -> String? {
+        let locale = NSLocale(localeIdentifier: inLanguge ?? language)
+        return locale.displayName(forKey: NSLocale.Key.identifier, value: language)
     }
 
 }
@@ -90,7 +82,7 @@ public class BundleEx: Bundle {
 
 extension Bundle {
 
-    static func update(language: Language) {
+    static func update(language: String) {
 
         DispatchQueue.once(sender: self) {
             object_setClass(main, BundleEx.self)
@@ -98,20 +90,21 @@ extension Bundle {
 
         updateLocalizationAttributes()
 
-        let bundlePath = Bundle(path: Bundle.main.path(forResource: language.rawValue, ofType: "lproj")!)
+        let bundlePath = Bundle(path: Bundle.main.path(forResource: language, ofType: "lproj")!)
 
         objc_setAssociatedObject(Bundle.main, &bundleKey, bundlePath,
                                  objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
 
     static func updateLocalizationAttributes() {
-        let semanticContentAttribute: UISemanticContentAttribute = Localization.isRTL ? .forceRightToLeft : .forceLeftToRight
+        let isRTL = Localization.isRTL
+        let semanticContentAttribute: UISemanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
 
         UIView.appearance().semanticContentAttribute = semanticContentAttribute
         UINavigationBar.appearance().semanticContentAttribute = semanticContentAttribute
 
-        UserDefaults.standard.set(Localization.isRTL, forKey: "AppleTextDirection")
-        UserDefaults.standard.set(Localization.isRTL, forKey: "NSForceRightToLeftWritingDirection")
+        UserDefaults.standard.set(isRTL, forKey: "AppleTextDirection")
+        UserDefaults.standard.set(isRTL, forKey: "NSForceRightToLeftWritingDirection")
         UserDefaults.standard.synchronize()
     }
 }
