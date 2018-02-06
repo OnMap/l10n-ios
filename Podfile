@@ -17,4 +17,5 @@ target 'Example' do
 end
 
 target 'OML10nTests' do
+    project 'OML10n.xcodeproj'
 end
