@@ -96,14 +96,9 @@ public class LiveUpdates {
      Observes changes in Realm for given languge and updates views
      */
     private func configureObservingChanges() {
-        let language: RealmConfig
-        switch Localization.currentLanguage {
-        case .english: language = .english
-        case .hebrew: language = .hebrew
-        case .russian: language = .russian
-        }
+        let language = Localization.currentLanguage
         do {
-            let realm = try Realm(realmConfig: language)
+            let realm = try Realm(configuration: Realm.configuration(language: language))
             let localizedElements = realm.objects(LocalizedElement.self)
             Observable.arrayWithChangeset(from: localizedElements)
                 .subscribe(onNext: { [weak self] array, changes in

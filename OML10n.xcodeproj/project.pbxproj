@@ -536,6 +536,7 @@
 		};
 		C77A0BAF1FBF24FB00DC4E8C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D466B2CF057C89DA1931838 /* Pods-OML10n.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -596,6 +597,7 @@
 		};
 		C77A0BB01FBF24FB00DC4E8C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2AA761DB655FFEBCA631D947 /* Pods-OML10n.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

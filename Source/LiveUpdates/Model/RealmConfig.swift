@@ -6,57 +6,29 @@
 //  Copyright © 2017 OnMap LTD. All rights reserved.
 //
 
-import Foundation
 import RealmSwift
 
-enum RealmConfig {
+extension Realm {
 
-    case english, hebrew, russian
-
-    // MARK: - Private configurations
-    private static let englishConfig = Realm.Configuration(
-        fileURL: URL.inDocumentsFolder(fileName: "englishLocalization.realm")
-    )
-
-    private static let hebrewConfig = Realm.Configuration(
-        fileURL: URL.inDocumentsFolder(fileName: "hebrewLocalization.realm")
-    )
-
-    private static let russianConfig = Realm.Configuration(
-        fileURL: URL.inDocumentsFolder(fileName: "russianLocalization.realm")
-    )
-
-    // MARK: - Current configuration
-
-    var configuration: Realm.Configuration {
-        switch self {
-        case .english: return RealmConfig.englishConfig
-        case .hebrew: return RealmConfig.hebrewConfig
-        case .russian: return RealmConfig.russianConfig
-        }
+    static func configuration(language: String) -> Realm.Configuration {
+        return Realm.Configuration(fileURL: URL.inDocumentsFolder(fileName: language + "Localization.realm"))
     }
 
-    func delete() {
-        guard let url = configuration.fileURL else { return }
+    static func delete(language: String) {
+        guard let url = configuration(language: language).fileURL else { return }
         let realmURLsToDelete = [
             url,
             url.appendingPathExtension("lock"),
             url.appendingPathExtension("note"),
             url.appendingPathExtension("management")
         ]
-        realmURLsToDelete.forEach { url in
+        for url in realmURLsToDelete where FileManager.default.fileExists(atPath: url.path) {
             do {
                 try FileManager.default.removeItem(at: url)
             } catch {
                 print(error.localizedDescription)
             }
         }
-    }
-}
-
-extension Realm {
-    convenience init(realmConfig: RealmConfig) throws {
-        try self.init(configuration: realmConfig.configuration)
     }
 }
 
