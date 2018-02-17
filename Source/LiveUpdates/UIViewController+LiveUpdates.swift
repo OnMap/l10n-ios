@@ -1,5 +1,5 @@
 //
-//  LiveUpdates.swift
+//  UIViewController+LiveUpdates.swift
 //  OML10n
 //
 //  Created by Alex Alexandrovych on 16/08/2017.
@@ -12,168 +12,33 @@ import RealmSwift
 import RxRealm
 import NSObject_Rx
 
-private var runtimeLocalizationKey: UInt8 = 0
+private var runtimeLocalizedObjectsKey: UInt8 = 0
 
-private extension UIViewController {
+public extension UIViewController {
 
-    var liveUpdates: LiveUpdates? {
+    var localizedObjects: [String: AnyObject] {
         get {
-            return objc_getAssociatedObject(self, &runtimeLocalizationKey) as? LiveUpdates
+            return objc_getAssociatedObject(self, &runtimeLocalizedObjectsKey) as? [String: AnyObject] ?? [:]
         }
         set {
-            objc_setAssociatedObject(self, &runtimeLocalizationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &runtimeLocalizedObjectsKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
-}
 
-public class LiveUpdates {
-
-    /**
-     Created for keeping references to all objects, that should be updated on-the-fly
-     */
-    private var localizedObjects: [String: AnyObject] = [:]
-
-    private weak var viewController: UIViewController!
-
-    // MARK: Public API
-
-    public static func listenUpdates(for viewController: UIViewController) {
-        viewController.liveUpdates = LiveUpdates(viewController: viewController)
-    }
-
-    public static func stopListenUpdates(for viewController: UIViewController) {
-        viewController.liveUpdates?.stopListenUpdates()
-    }
-
-    // MARK: - Private
-
-    /**
-     Appends all localized objects to the dictionary and configures live updating
-     */
-    private init(viewController: UIViewController) {
-        self.viewController = viewController
-
-        // Populate objects that shoud be updated live
-        localizedObjects = getLocalizedViews(from: viewController.view)
-
-        // Adding NavigationItem, BarButtonItems and TabBarItem because they are not in view hierarchy
-        let navigationItem = viewController.navigationItem
-        if let key = navigationItem.localizationKey {
-            localizedObjects[key] = navigationItem
-            let properties: [NavigationItemLocalizedProperty] = [.title, .prompt, .backButtonTitle]
-            properties.forEach {
-                localizedObjects[key + navigationItem.separator + $0.description] = navigationItem
-            }
-        }
-
-        let barButtonItems = [navigationItem.leftBarButtonItems ?? [], navigationItem.rightBarButtonItems ?? []]
-        barButtonItems.forEach { buttons in
-            buttons.forEach { button in
-                if let key = button.localizationKey {
-                    localizedObjects[key] = button
-                }
-            }
-        }
-
-        let tabBarItem = viewController.tabBarItem
-        if let item = tabBarItem, let key = item.localizationKey {
-            localizedObjects[key] = tabBarItem
-            let properties: [TabBarItemLocalizedProperty] = [.title, .badgeValue]
-            properties.forEach {
-                localizedObjects[key + item.separator + $0.description] = tabBarItem
-            }
-        }
-
-        // Start observing changes
-        configureObservingChanges()
-    }
-
-    private func stopListenUpdates() {
-        viewController.rx.disposeBag = DisposeBag()
-    }
-
-    /**
-     Observes changes in Realm for given languge and updates views
-     */
-    private func configureObservingChanges() {
-        let language = Localization.currentLanguage
+    public func startLiveUpdates(language: String = Localization.currentLanguage) {
+        localizedObjects = getLocalizedObjects
         do {
-            let realm = try Realm(configuration: Realm.configuration(language: language))
+            let realm = try Realm(configuration: Realm.configuration(name: language))
             let localizedElements = realm.objects(LocalizedElement.self)
             Observable.arrayWithChangeset(from: localizedElements)
+                .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] array, changes in
                     self?.updateViews(from: array, with: changes)
                 })
-                .disposed(by: viewController.rx.disposeBag)
+                .disposed(by: rx.disposeBag)
         } catch {
             print(error.localizedDescription)
         }
-    }
-
-    /**
-     Recursively returns all localizable subviews from a given view
-     */
-    private func getLocalizedViews(from view: UIView) -> [String: UIView] {
-        var views: [String: UIView] = [:]
-
-        // We need to check if the view is UITextField or UITextView or UISearchBar or UISegmentedControl,
-        // because it contains more subviews that we don't need to work with
-        if view.subviews.isEmpty ||
-            view is UITextField ||
-            view is UITextView ||
-            view is UISearchBar ||
-            view is UISegmentedControl {
-
-            switch view {
-            case let button as UIButton:
-                if let key = button.localizationKey {
-                    views[key] = button
-                    let properties: [ButtonLocalizedProperty] = [.normal, .selected, .highlighted, .disabled]
-                    properties.forEach {
-                        views[key + button.separator + $0.description] = view
-                    }
-                }
-            case let label as UILabel:
-                if let key = label.localizationKey {
-                    views[key] = label
-                }
-            case let textField as UITextField:
-                if let key = textField.localizationKey {
-                    let properties: [TextFieldLocalizedProperty] = [.text, .placeholder]
-                    properties.forEach {
-                        views[key + textField.separator + $0.description] = view
-                    }
-                }
-            case let textView as UITextView:
-                if let key = textView.localizationKey {
-                    views[key] = textView
-                }
-            case let searchBar as UISearchBar:
-                if let key = searchBar.localizationKey {
-                    let properties: [SearchBarLocalizedProperty] = [.text, .placeholder, .prompt]
-                    properties.forEach {
-                        views[key + searchBar.separator + $0.description] = view
-                    }
-                }
-            case let segmentedControl as UISegmentedControl:
-                if let key = segmentedControl.localizationKey {
-                    (0..<segmentedControl.numberOfSegments).forEach { index in
-                        views[key + segmentedControl.separator + String(index)] = segmentedControl
-                    }
-                }
-            default:
-                break
-            }
-            return views
-        }
-
-        view.subviews.forEach { subview in
-            for (key, value) in getLocalizedViews(from: subview) {
-                views[key] = value
-            }
-        }
-
-        return views
     }
 
     private func updateViews(from array: [LocalizedElement], with changes: RealmChangeset?) {
@@ -314,5 +179,110 @@ public class LiveUpdates {
                 print("Object \(object) has unsupported type")
             #endif
         }
+    }
+}
+
+public extension UIViewController {
+    /**
+     Recursively returns all localizable objects
+     */
+    var getLocalizedObjects: [String: AnyObject] {
+        // Add views that shoud be updated live
+        var localizedObjects: [String: AnyObject] = view.getLocalizedViews
+
+        // Add NavigationItem, BarButtonItems and TabBarItem because they are not in view hierarchy
+        if let key = navigationItem.localizationKey {
+            localizedObjects[key] = navigationItem
+            let properties: [NavigationItemLocalizedProperty] = [.title, .prompt, .backButtonTitle]
+            properties.forEach {
+                localizedObjects[key + navigationItem.separator + $0.description] = navigationItem
+            }
+        }
+
+        let barButtonItems = [navigationItem.leftBarButtonItems ?? [], navigationItem.rightBarButtonItems ?? []]
+        barButtonItems.forEach { buttons in
+            buttons.forEach { button in
+                if let key = button.localizationKey {
+                    localizedObjects[key] = button
+                }
+            }
+        }
+
+        if let item = tabBarItem, let key = item.localizationKey {
+            localizedObjects[key] = item
+            let properties: [TabBarItemLocalizedProperty] = [.title, .badgeValue]
+            properties.forEach {
+                localizedObjects[key + item.separator + $0.description] = tabBarItem
+            }
+        }
+        return localizedObjects
+    }
+}
+
+public extension UIView {
+    /**
+     Recursively returns all localizable subviews
+     */
+    var getLocalizedViews: [String: UIView] {
+        var views: [String: UIView] = [:]
+
+        // We need to check if the view is UITextField or UITextView or UISearchBar or UISegmentedControl,
+        // because it contains more subviews that we don't need to work with
+        if subviews.isEmpty ||
+            self is UITextField ||
+            self is UITextView ||
+            self is UISearchBar ||
+            self is UISegmentedControl {
+
+            switch self {
+            case let button as UIButton:
+                if let key = button.localizationKey {
+                    views[key] = button
+                    let properties: [ButtonLocalizedProperty] = [.normal, .selected, .highlighted, .disabled]
+                    properties.forEach {
+                        views[key + button.separator + $0.description] = button
+                    }
+                }
+            case let label as UILabel:
+                if let key = label.localizationKey {
+                    views[key] = label
+                }
+            case let textField as UITextField:
+                if let key = textField.localizationKey {
+                    let properties: [TextFieldLocalizedProperty] = [.text, .placeholder]
+                    properties.forEach {
+                        views[key + textField.separator + $0.description] = textField
+                    }
+                }
+            case let textView as UITextView:
+                if let key = textView.localizationKey {
+                    views[key] = textView
+                }
+            case let searchBar as UISearchBar:
+                if let key = searchBar.localizationKey {
+                    let properties: [SearchBarLocalizedProperty] = [.text, .placeholder, .prompt]
+                    properties.forEach {
+                        views[key + searchBar.separator + $0.description] = searchBar
+                    }
+                }
+            case let segmentedControl as UISegmentedControl:
+                if let key = segmentedControl.localizationKey {
+                    (0..<segmentedControl.numberOfSegments).forEach { index in
+                        views[key + segmentedControl.separator + String(index)] = segmentedControl
+                    }
+                }
+            default:
+                break
+            }
+            return views
+        }
+
+        subviews.forEach { subview in
+            for (key, value) in subview.getLocalizedViews {
+                views[key] = value
+            }
+        }
+
+        return views
     }
 }

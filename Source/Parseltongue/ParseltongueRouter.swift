@@ -8,66 +8,19 @@
 
 import Foundation
 
-typealias Parameters = [String: Any]
+enum HTTPMethod: String {
+    case get, post
+}
 
 enum ParseltongueRouter {
 
-    private static let baseUrl = "https://parseltongue.onmap.co.il/v1/"
-
-    enum HTTPMethod: String {
-        case get, post
-    }
+    static let baseUrl = "https://parseltongue.onmap.co.il/v1/"
 
     case getTranslations(String)
     case postKey(appId: String, key: String, token: String)
     case postKeys(appId: String, keys: [String], token: String)
 
-    var method: HTTPMethod {
-        switch self {
-        case .getTranslations:
-            return .get
-        case .postKey, .postKeys:
-            return .post
-        }
-    }
-
-    func asURLRequest() -> URLRequest {
-
-        let url: URL = {
-            let relativePath: String
-            switch self {
-            case .getTranslations(let appId):
-                return URL(string: ParseltongueRouter.baseUrl + "translations?app_id=\(appId)")!
-            case .postKey, .postKeys:
-                relativePath = "keys"
-            }
-            var url = URL(string: ParseltongueRouter.baseUrl)!
-            url.appendPathComponent(relativePath)
-            return url
-        }()
-
-        let parameters: Parameters? = {
-            switch self {
-            case .getTranslations:
-                return nil
-            case .postKey(let appId, let key, _):
-                return ["app_id": appId, "name": key]
-            case .postKeys(let appId, let keys, _):
-                return ["app_id": appId, "names": keys]
-            }
-        }()
-
-        let token: String? = {
-            switch self {
-            case .getTranslations:
-                return nil
-            case .postKey(_, _, let token):
-                return token
-            case .postKeys(_, _, let token):
-                return token
-            }
-        }()
-
+    func urlRequest() -> URLRequest {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue.uppercased()
 
@@ -81,5 +34,49 @@ enum ParseltongueRouter {
             }
         }
         return urlRequest
+    }
+
+    var method: HTTPMethod {
+        switch self {
+        case .getTranslations:
+            return .get
+        case .postKey, .postKeys:
+            return .post
+        }
+    }
+
+    var url: URL {
+        let relativePath: String
+        switch self {
+        case .getTranslations(let appID):
+            return URL(string: ParseltongueRouter.baseUrl + "translations?app_id=\(appID)")!
+        case .postKey, .postKeys:
+            relativePath = "keys"
+        }
+        var url = URL(string: ParseltongueRouter.baseUrl)!
+        url.appendPathComponent(relativePath)
+        return url
+    }
+
+    var parameters: [String: Any]? {
+        switch self {
+        case .getTranslations:
+            return nil
+        case .postKey(let appID, let key, _):
+            return ["app_id": appID, "name": key]
+        case .postKeys(let appID, let keys, _):
+            return ["app_id": appID, "names": keys]
+        }
+    }
+
+    var token: String? {
+        switch self {
+        case .getTranslations:
+            return nil
+        case .postKey(_, _, let token):
+            return token
+        case .postKeys(_, _, let token):
+            return token
+        }
     }
 }
