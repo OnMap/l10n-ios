@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		345EAB9E38C6529216B23F15 /* Pods_OML10nTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66DC41F1C2AF88C59FEEA5B6 /* Pods_OML10nTests.framework */; };
 		3CB5E360C8F6AD52B20A59AD /* Pods_OML10n.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6BBBDA7BABC5DDA7E99CC9 /* Pods_OML10n.framework */; };
+		ABD6D20A2038771C00F3EC31 /* LiveUpdatesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D2092038771C00F3EC31 /* LiveUpdatesService.swift */; };
+		ABD6D20C2038772B00F3EC31 /* ParseltongueService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D20B2038772B00F3EC31 /* ParseltongueService.swift */; };
+		ABD6D21820387C2E00F3EC31 /* UIViewController+LiveUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D21720387C2E00F3EC31 /* UIViewController+LiveUpdates.swift */; };
 		ABEDDE452026313300D5D4DF /* OML10n.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C77A0BA91FBF24FA00DC4E8C /* OML10n.framework */; };
 		ABEDDE502026328F00D5D4DF /* UILabel+LocalizableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDDE4B2026328F00D5D4DF /* UILabel+LocalizableTests.swift */; };
 		ABEDDE512026328F00D5D4DF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABEDDE4C2026328F00D5D4DF /* Localizable.strings */; };
@@ -23,12 +26,10 @@
 		ABEDDE61202661DF00D5D4DF /* UITabBarItem+LocalizableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDDE60202661DF00D5D4DF /* UITabBarItem+LocalizableTests.swift */; };
 		C77A0BC61FBF27BE00DC4E8C /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BB81FBF27BE00DC4E8C /* Localization.swift */; };
 		C77A0BC71FBF27BE00DC4E8C /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BB91FBF27BE00DC4E8C /* Localizable.swift */; };
-		C77A0BCA1FBF27BE00DC4E8C /* LiveUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BBF1FBF27BE00DC4E8C /* LiveUpdates.swift */; };
 		C77A0BCB1FBF27BE00DC4E8C /* RealmConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BC11FBF27BE00DC4E8C /* RealmConfig.swift */; };
 		C77A0BCC1FBF27BE00DC4E8C /* LocalizedElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BC21FBF27BE00DC4E8C /* LocalizedElement.swift */; };
 		C77A0BCF1FBF27BE00DC4E8C /* OML10n.h in Headers */ = {isa = PBXBuildFile; fileRef = C77A0BC51FBF27BE00DC4E8C /* OML10n.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C77A0BD31FBF285700DC4E8C /* ParseltongueRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BD21FBF285700DC4E8C /* ParseltongueRouter.swift */; };
-		C77A0BDB1FBF313100DC4E8C /* LiveUpdatesNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BDA1FBF313100DC4E8C /* LiveUpdatesNetworkService.swift */; };
 		C77A0BE61FC0229C00DC4E8C /* UIKit+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A0BE51FC0229B00DC4E8C /* UIKit+Localization.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,9 @@
 		5D466B2CF057C89DA1931838 /* Pods-OML10n.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OML10n.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OML10n/Pods-OML10n.debug.xcconfig"; sourceTree = "<group>"; };
 		66DC41F1C2AF88C59FEEA5B6 /* Pods_OML10nTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OML10nTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B0BF50ED7C57003E75C2BD3 /* Pods-OML10nTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OML10nTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OML10nTests/Pods-OML10nTests.debug.xcconfig"; sourceTree = "<group>"; };
+		ABD6D2092038771C00F3EC31 /* LiveUpdatesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveUpdatesService.swift; sourceTree = "<group>"; };
+		ABD6D20B2038772B00F3EC31 /* ParseltongueService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseltongueService.swift; sourceTree = "<group>"; };
+		ABD6D21720387C2E00F3EC31 /* UIViewController+LiveUpdates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+LiveUpdates.swift"; sourceTree = "<group>"; };
 		ABEDDE402026313300D5D4DF /* OML10nTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OML10nTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABEDDE442026313300D5D4DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABEDDE4B2026328F00D5D4DF /* UILabel+LocalizableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+LocalizableTests.swift"; sourceTree = "<group>"; };
@@ -63,7 +67,6 @@
 		C77A0BA91FBF24FA00DC4E8C /* OML10n.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OML10n.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77A0BB81FBF27BE00DC4E8C /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		C77A0BB91FBF27BE00DC4E8C /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
-		C77A0BBF1FBF27BE00DC4E8C /* LiveUpdates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveUpdates.swift; sourceTree = "<group>"; };
 		C77A0BC11FBF27BE00DC4E8C /* RealmConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmConfig.swift; sourceTree = "<group>"; };
 		C77A0BC21FBF27BE00DC4E8C /* LocalizedElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedElement.swift; sourceTree = "<group>"; };
 		C77A0BC41FBF27BE00DC4E8C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -72,7 +75,6 @@
 		C77A0BD41FBF289200DC4E8C /* OML10n.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OML10n.podspec; sourceTree = "<group>"; };
 		C77A0BD71FBF28BB00DC4E8C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C77A0BD81FBF28BB00DC4E8C /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		C77A0BDA1FBF313100DC4E8C /* LiveUpdatesNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveUpdatesNetworkService.swift; sourceTree = "<group>"; };
 		C77A0BE51FC0229B00DC4E8C /* UIKit+Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Localization.swift"; sourceTree = "<group>"; };
 		CD6BBBDA7BABC5DDA7E99CC9 /* Pods_OML10n.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OML10n.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAFF0F8A9DDF9DC9A1720610 /* Pods-OML10nTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OML10nTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-OML10nTests/Pods-OML10nTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -200,7 +202,8 @@
 		C77A0BBE1FBF27BE00DC4E8C /* LiveUpdates */ = {
 			isa = PBXGroup;
 			children = (
-				C77A0BBF1FBF27BE00DC4E8C /* LiveUpdates.swift */,
+				ABD6D2092038771C00F3EC31 /* LiveUpdatesService.swift */,
+				ABD6D21720387C2E00F3EC31 /* UIViewController+LiveUpdates.swift */,
 				C77A0BC01FBF27BE00DC4E8C /* Model */,
 			);
 			path = LiveUpdates;
@@ -228,7 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				C77A0BD21FBF285700DC4E8C /* ParseltongueRouter.swift */,
-				C77A0BDA1FBF313100DC4E8C /* LiveUpdatesNetworkService.swift */,
+				ABD6D20B2038772B00F3EC31 /* ParseltongueService.swift */,
 			);
 			path = Parseltongue;
 			sourceTree = "<group>";
@@ -477,14 +480,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C77A0BCA1FBF27BE00DC4E8C /* LiveUpdates.swift in Sources */,
+				ABD6D20C2038772B00F3EC31 /* ParseltongueService.swift in Sources */,
+				ABD6D21820387C2E00F3EC31 /* UIViewController+LiveUpdates.swift in Sources */,
 				C77A0BCC1FBF27BE00DC4E8C /* LocalizedElement.swift in Sources */,
 				C77A0BC71FBF27BE00DC4E8C /* Localizable.swift in Sources */,
-				C77A0BDB1FBF313100DC4E8C /* LiveUpdatesNetworkService.swift in Sources */,
 				C77A0BD31FBF285700DC4E8C /* ParseltongueRouter.swift in Sources */,
 				C77A0BE61FC0229C00DC4E8C /* UIKit+Localization.swift in Sources */,
 				C77A0BC61FBF27BE00DC4E8C /* Localization.swift in Sources */,
 				C77A0BCB1FBF27BE00DC4E8C /* RealmConfig.swift in Sources */,
+				ABD6D20A2038771C00F3EC31 /* LiveUpdatesService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

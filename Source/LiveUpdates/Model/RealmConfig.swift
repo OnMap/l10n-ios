@@ -10,12 +10,12 @@ import RealmSwift
 
 extension Realm {
 
-    static func configuration(language: String) -> Realm.Configuration {
-        return Realm.Configuration(fileURL: URL.inDocumentsFolder(fileName: language + "Localization.realm"))
+    static func configuration(name: String) -> Realm.Configuration {
+        return Realm.Configuration(fileURL: URL.inDocumentsFolder(fileName: "\(name).realm"))
     }
 
-    static func delete(language: String) {
-        guard let url = configuration(language: language).fileURL else { return }
+    static func delete(name: String) {
+        guard let url = configuration(name: name).fileURL else { return }
         let realmURLsToDelete = [
             url,
             url.appendingPathExtension("lock"),
