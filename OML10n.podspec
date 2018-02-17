@@ -26,6 +26,7 @@ Pod::Spec.new do |s|
     liveupdates.dependency 'OML10n/Core'
     liveupdates.dependency "RealmSwift", "~> 3.0.0"
     liveupdates.dependency "RxSwift", "~> 4.0.0"
+    liveupdates.dependency "RxCocoa", "~> 4.0.0"
     liveupdates.dependency 'RxRealm', '~> 0.7.0'
     liveupdates.dependency 'NSObject+Rx', '~> 4.2.0'
   end
