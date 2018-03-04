@@ -84,22 +84,22 @@ extension ParseltongueService: LiveUpdatesProvider {
     public func startObservingChanges(parsingBlock: @escaping ([String : Any]) -> Void) {
         let url = ParseltongueRouter.getTranslations(appID).url
 
-        let socket = SocketIOClient(socketURL: url, config: [.log(false), .compress])
-        self.socket = socket
+        let manager = SocketManager(socketURL: url, config: [.compress])
+        self.socket = manager.defaultSocket
 
-        socket.on(clientEvent: .connect) { data, ack in
+        socket?.on(clientEvent: .connect) { data, ack in
             print("socket connected")
         }
 
-        socket.on(appID) { data, ack in
+        socket?.on(appID) { [socket] data, ack in
             guard let json = data[0] as? JSONDictionary else { return }
             parsingBlock(json)
-            socket.emitWithAck("canUpdate", 0).timingOut(after: 0) { _ in
-                socket.emit("updated")
+            socket?.emitWithAck("canUpdate", 0).timingOut(after: 0) { _ in
+                socket?.emit("updated")
             }
         }
 
-        socket.connect()
+        socket?.connect()
     }
 
     public func stopObservingChanges() {
