@@ -24,17 +24,17 @@ Pod::Spec.new do |s|
   s.subspec 'LiveUpdates' do |liveupdates|
     liveupdates.source_files = 'Source/LiveUpdates/**/*.swift'
     liveupdates.dependency 'OML10n/Core'
-    liveupdates.dependency "RealmSwift", "~> 3.0.0"
-    liveupdates.dependency "RxSwift", "~> 4.0.0"
-    liveupdates.dependency "RxCocoa", "~> 4.0.0"
-    liveupdates.dependency 'RxRealm', '~> 0.7.0'
-    liveupdates.dependency 'NSObject+Rx', '~> 4.2.0'
+    liveupdates.dependency "RealmSwift", "~> 3.1"
+    liveupdates.dependency "RxSwift", "~> 4.1"
+    liveupdates.dependency "RxCocoa", "~> 4.1"
+    liveupdates.dependency 'RxRealm', '~> 0.7'
+    liveupdates.dependency 'NSObject+Rx', '~> 4.2'
   end
   
   s.subspec 'Parseltongue' do |parseltongue|
     parseltongue.source_files = 'Source/Parseltongue/**/*.swift'
     parseltongue.dependency 'OML10n/LiveUpdates'
-    parseltongue.dependency 'Socket.IO-Client-Swift', '~> 12.1.0'    
+    parseltongue.dependency 'Socket.IO-Client-Swift', '~> 13.1'
   end
 
 end
