@@ -14,9 +14,6 @@ import Foundation
 public func localized(_ key: String, bundle: Bundle = Bundle.main) -> String? {
     let localizedString = bundle.localizedString(forKey: key, value: key, table: nil)
     guard localizedString != key && !localizedString.isEmpty else {
-        #if DEBUG
-            print("There is no localized text for key: \(key)")
-        #endif
         return nil
     }
     return localizedString
